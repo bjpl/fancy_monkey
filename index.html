@@ -206,6 +206,30 @@
             letter-spacing: 0.05em;
         }
 
+        .monkey-section {
+            text-align: center;
+            padding: 3rem 1rem 2rem;
+        }
+
+        .monkey-graphic {
+            width: 200px;
+            height: auto;
+            max-width: 80%;
+            margin: 0 auto;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .monkey-graphic:hover {
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 640px) {
+            .monkey-graphic {
+                width: 150px;
+            }
+        }
+
         footer {
             border-top: 1px solid #000;
             padding: 2rem 1rem;
@@ -287,6 +311,10 @@
     <main class="products" id="products">
         <!-- Products will be loaded here -->
     </main>
+
+    <div class="monkey-section">
+        <img src="assets/monkey_full.png" alt="Fancy Monkey Mascot" class="monkey-graphic">
+    </div>
 
     <footer>
         <div class="footer-section">
