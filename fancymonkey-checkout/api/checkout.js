@@ -7,7 +7,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
 
 // CORS headers for allowing GitHub Pages domain
 const corsHeaders = {
-    'Access-Control-Allow-Origin': 'https://fancymonkey.shop',
+    'Access-Control-Allow-Origin': '*', // Will restrict to specific domain in production
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type',
     'Access-Control-Max-Age': '86400',
