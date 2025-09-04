@@ -1,0 +1,112 @@
+[
+    {
+        "id": "prod_001",
+        "name": "VOID HOODIE",
+        "price": 180,
+        "image": "images/void-hoodie.jpg",
+        "fit": "Oversized fit - Size down for regular fit",
+        "sizes": {
+            "S": {
+                "skuId": "sku_void_s",
+                "priceId": "price_void_s",
+                "soldOut": false
+            },
+            "M": {
+                "skuId": "sku_void_m",
+                "priceId": "price_void_m",
+                "soldOut": false
+            },
+            "L": {
+                "skuId": "sku_void_l",
+                "priceId": "price_void_l",
+                "soldOut": false
+            },
+            "XL": {
+                "skuId": "sku_void_xl",
+                "priceId": "price_void_xl",
+                "soldOut": false
+            }
+        },
+        "fallbackLink": "https://buy.stripe.com/test_void_hoodie"
+    },
+    {
+        "id": "prod_002",
+        "name": "CIPHER TEE",
+        "price": 85,
+        "image": "images/cipher-tee.jpg",
+        "fit": "True to size - 100% Cotton",
+        "sizes": {
+            "S": {
+                "skuId": "sku_cipher_s",
+                "priceId": "price_cipher_s",
+                "soldOut": false
+            },
+            "M": {
+                "skuId": "sku_cipher_m",
+                "priceId": "price_cipher_m",
+                "soldOut": false
+            },
+            "L": {
+                "skuId": "sku_cipher_l",
+                "priceId": "price_cipher_l",
+                "soldOut": false
+            },
+            "XL": {
+                "skuId": "sku_cipher_xl",
+                "priceId": "price_cipher_xl",
+                "soldOut": true
+            }
+        },
+        "fallbackLink": "https://buy.stripe.com/test_cipher_tee"
+    },
+    {
+        "id": "prod_003",
+        "name": "PHANTOM CARGO",
+        "price": 220,
+        "image": "images/phantom-cargo.jpg",
+        "fit": "Relaxed fit - See size chart",
+        "sizes": {
+            "28": {
+                "skuId": "sku_phantom_28",
+                "priceId": "price_phantom_28",
+                "soldOut": false
+            },
+            "30": {
+                "skuId": "sku_phantom_30",
+                "priceId": "price_phantom_30",
+                "soldOut": false
+            },
+            "32": {
+                "skuId": "sku_phantom_32",
+                "priceId": "price_phantom_32",
+                "soldOut": false
+            },
+            "34": {
+                "skuId": "sku_phantom_34",
+                "priceId": "price_phantom_34",
+                "soldOut": false
+            },
+            "36": {
+                "skuId": "sku_phantom_36",
+                "priceId": "price_phantom_36",
+                "soldOut": false
+            }
+        },
+        "fallbackLink": "https://buy.stripe.com/test_phantom_cargo"
+    },
+    {
+        "id": "prod_004",
+        "name": "MONOCHROME CAP",
+        "price": 65,
+        "image": "images/monochrome-cap.jpg",
+        "fit": "One size - Adjustable strap",
+        "sizes": {
+            "OS": {
+                "skuId": "sku_mono_os",
+                "priceId": "price_mono_os",
+                "soldOut": false
+            }
+        },
+        "fallbackLink": "https://buy.stripe.com/test_monochrome_cap"
+    }
+]
