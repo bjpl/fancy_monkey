@@ -189,7 +189,7 @@
         "category": "t-shirts",
         "name": "CLASSIC MONKEY TEE",
         "price": 28,
-        "image": "images/tshirt_classic_monkey.png",
+        "image": "images/placeholder_product.svg",
         "fit": "Regular fit - 100% organic cotton",
         "description": "Essential people clothes with signature branding",
         "sizes": {
@@ -226,7 +226,7 @@
         "category": "t-shirts",
         "name": "GRADIENT DREAMS TEE",
         "price": 32,
-        "image": "images/tshirt_gradient_dreams.png",
+        "image": "images/placeholder_product.svg",
         "fit": "Oversized fit - Premium heavyweight cotton",
         "description": "Artistic people clothes with unique prints",
         "sizes": {
@@ -263,7 +263,7 @@
         "category": "t-shirts",
         "name": "MINIMAL LOGO TEE",
         "price": 25,
-        "image": "images/tshirt_minimal_logo.png",
+        "image": "images/placeholder_product.svg",
         "fit": "Slim fit - Soft cotton blend",
         "description": "Clean, minimalist people clothes",
         "sizes": {
@@ -300,7 +300,7 @@
         "category": "stickers",
         "name": "FANCY MONKEY LOGO STICKER",
         "price": 3,
-        "image": "images/sticker_logo.png",
+        "image": "images/placeholder_product.svg",
         "description": "Waterproof vinyl sticker - 3 inch",
         "sizes": {
             "ONE_SIZE": {
@@ -316,7 +316,7 @@
         "category": "stickers",
         "name": "HOLOGRAPHIC PACK (5 STICKERS)",
         "price": 12,
-        "image": "images/sticker_holo_pack.png",
+        "image": "images/placeholder_product.svg",
         "description": "Premium holographic sticker collection",
         "sizes": {
             "ONE_SIZE": {
@@ -332,7 +332,7 @@
         "category": "stickers",
         "name": "MINI STICKER SET (10 PACK)",
         "price": 8,
-        "image": "images/sticker_mini_set.png",
+        "image": "images/placeholder_product.svg",
         "description": "Assorted mini stickers - 1-2 inches each",
         "sizes": {
             "ONE_SIZE": {
@@ -348,7 +348,7 @@
         "category": "hangings",
         "name": "CANVAS WALL ART - MONKEY DREAMS",
         "price": 45,
-        "image": "images/hanging_canvas_dreams.png",
+        "image": "images/placeholder_product.svg",
         "description": "Premium canvas print - 18x24 inches",
         "sizes": {
             "18x24": {
@@ -369,7 +369,7 @@
         "category": "hangings",
         "name": "TAPESTRY - FANCY VIBES",
         "price": 38,
-        "image": "images/hanging_tapestry_vibes.png",
+        "image": "images/placeholder_product.svg",
         "description": "Soft polyester tapestry - 4x5 feet",
         "sizes": {
             "4x5ft": {
@@ -390,7 +390,7 @@
         "category": "hangings",
         "name": "METAL POSTER - GEOMETRIC MONKEY",
         "price": 55,
-        "image": "images/hanging_metal_geometric.png",
+        "image": "images/placeholder_product.svg",
         "description": "Aluminum print with floating mount - 16x20 inches",
         "sizes": {
             "16x20": {
@@ -406,7 +406,7 @@
         "category": "notebooks",
         "name": "HARDCOVER JOURNAL - BLACK EDITION",
         "price": 18,
-        "image": "images/notebook_black_hardcover.png",
+        "image": "images/placeholder_product.svg",
         "description": "Premium hardcover notebook - 200 pages, dotted",
         "sizes": {
             "A5": {
@@ -422,7 +422,7 @@
         "category": "notebooks",
         "name": "SPIRAL SKETCHBOOK - ARTIST SERIES",
         "price": 22,
-        "image": "images/notebook_spiral_artist.png",
+        "image": "images/placeholder_product.svg",
         "description": "Heavy-weight paper sketchbook - 120 pages",
         "sizes": {
             "A4": {
@@ -438,7 +438,7 @@
         "category": "notebooks",
         "name": "POCKET NOTEBOOK SET (3 PACK)",
         "price": 15,
-        "image": "images/notebook_pocket_set.png",
+        "image": "images/placeholder_product.svg",
         "description": "Set of 3 pocket notebooks - lined, blank, and grid",
         "sizes": {
             "POCKET": {

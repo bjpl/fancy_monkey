@@ -194,13 +194,181 @@
             font-size: 0.9rem;
         }
 
+        /* Error Handling UI */
         .error-message {
-            padding: 0.5rem;
-            background: #ff0000;
-            color: #fff;
+            padding: 0.75rem;
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeeba;
+            border-radius: 4px;
             text-align: center;
             margin-top: 0.5rem;
             font-size: 0.9rem;
+            animation: slideIn 0.3s ease;
+        }
+
+        .error-message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border-color: #f5c6cb;
+        }
+
+        .error-message.success {
+            background: #d4edda;
+            color: #155724;
+            border-color: #c3e6cb;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Connection Status Banner */
+        .connection-status {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 0.75rem;
+            background: #fff3cd;
+            color: #856404;
+            text-align: center;
+            font-size: 0.9rem;
+            transform: translateY(-100%);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .connection-status.show {
+            transform: translateY(0);
+        }
+
+        .connection-status.offline {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .connection-status.online {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .connection-status.development {
+            background: #cce5ff;
+            color: #004085;
+        }
+
+        .status-icon {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: inline-block;
+            animation: pulse 2s infinite;
+        }
+
+        .status-icon.offline {
+            background: #dc3545;
+        }
+
+        .status-icon.online {
+            background: #28a745;
+        }
+
+        .status-icon.development {
+            background: #007bff;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        /* Loading States */
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+
+        @keyframes loading {
+            0% {
+                background-position: 200% 0;
+            }
+            100% {
+                background-position: -200% 0;
+            }
+        }
+
+        .product-skeleton {
+            height: 400px;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+
+        /* Retry Button */
+        .retry-button {
+            padding: 0.75rem 1.5rem;
+            background: #000;
+            color: #fff;
+            border: none;
+            font-size: 0.9rem;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            text-transform: uppercase;
+            margin: 0.5rem;
+            transition: opacity 0.2s;
+        }
+
+        .retry-button:hover {
+            opacity: 0.8;
+        }
+
+        .retry-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Dev Mode Badge */
+        .dev-badge {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #007bff;
+            color: #fff;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            box-shadow: 0 2px 10px rgba(0, 123, 255, 0.3);
+            z-index: 999;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .dev-badge:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 20px rgba(0, 123, 255, 0.4);
+        }
+
+        .dev-badge.hidden {
+            display: none;
         }
 
         .sold-out-message {
@@ -647,6 +815,17 @@
     </style>
 </head>
 <body>
+    <!-- Connection Status Banner -->
+    <div class="connection-status" id="connectionStatus">
+        <span class="status-icon"></span>
+        <span id="statusMessage">Checking connection...</span>
+    </div>
+
+    <!-- Development Mode Badge -->
+    <div class="dev-badge hidden" id="devBadge">
+        DEV MODE
+    </div>
+
     <header>
         <img src="assets/logo.png" alt="Fancy Monkey" class="logo">
         <h1>FANCY MONKEY</h1>
@@ -729,24 +908,320 @@
     </div>
 
     <script>
+        // ========== Configuration & State ==========
         let products = [];
         let selectedSizes = {};
         let activeFilter = 'all';
         let categories = {};
-        const CHECKOUT_API = 'https://fancymonkey-checkout.vercel.app/api/checkout'; // Update this after Vercel deployment
 
-        // Load products
+        // Environment Detection
+        const ENV = {
+            isDevelopment: window.location.hostname === 'localhost' ||
+                          window.location.hostname === '127.0.0.1' ||
+                          window.location.hostname.includes('github.io'),
+            isProduction: window.location.hostname === 'fancymonkey.shop',
+            checkoutApiUrl: 'https://fancymonkey-checkout.vercel.app/api/checkout',
+            maxRetries: 3,
+            retryDelay: 1000 // Base delay for exponential backoff
+        };
+
+        // Connection State
+        const connectionState = {
+            online: navigator.onLine,
+            apiAvailable: false,
+            stripeConfigured: false,
+            lastCheck: null
+        };
+
+        // ========== Error Handling System ==========
+        class ErrorHandler {
+            constructor() {
+                this.retryAttempts = {};
+                this.errorLog = [];
+            }
+
+            // PATTERN: Centralized error handling with context
+            handle(error, context = {}) {
+                const errorInfo = {
+                    timestamp: new Date().toISOString(),
+                    message: error.message || error,
+                    context,
+                    stack: error.stack,
+                    userAgent: navigator.userAgent
+                };
+
+                this.errorLog.push(errorInfo);
+                console.error('Error occurred:', errorInfo);
+
+                // Route to appropriate handler based on error type
+                if (error.name === 'NetworkError' || !navigator.onLine) {
+                    return this.handleNetworkError(error, context);
+                } else if (error.status === 404) {
+                    return this.handleNotFoundError(error, context);
+                } else if (error.status === 500 || error.status === 503) {
+                    return this.handleServerError(error, context);
+                } else if (error.message?.includes('Stripe')) {
+                    return this.handleStripeError(error, context);
+                } else {
+                    return this.handleGenericError(error, context);
+                }
+            }
+
+            handleNetworkError(error, context) {
+                return {
+                    title: 'Connection Issue',
+                    message: 'Please check your internet connection and try again.',
+                    action: 'retry',
+                    severity: 'warning'
+                };
+            }
+
+            handleServerError(error, context) {
+                return {
+                    title: 'Service Temporarily Unavailable',
+                    message: ENV.isDevelopment ?
+                        'The checkout service is not configured yet. Using fallback mode.' :
+                        'Our servers are experiencing high traffic. Please try again in a moment.',
+                    action: 'retry',
+                    severity: 'error'
+                };
+            }
+
+            handleStripeError(error, context) {
+                return {
+                    title: 'Payment System Setup',
+                    message: ENV.isDevelopment ?
+                        'Stripe is not configured yet. In production, this will process payments.' :
+                        'Payment processing is temporarily unavailable.',
+                    action: 'fallback',
+                    severity: 'warning'
+                };
+            }
+
+            handleNotFoundError(error, context) {
+                return {
+                    title: 'Service Not Found',
+                    message: 'The requested service is not available. Please try again later.',
+                    action: 'fallback',
+                    severity: 'warning'
+                };
+            }
+
+            handleGenericError(error, context) {
+                return {
+                    title: 'Something Went Wrong',
+                    message: ENV.isDevelopment ?
+                        `Error: ${error.message || 'Unknown error occurred'}` :
+                        'An unexpected error occurred. Please try again.',
+                    action: 'retry',
+                    severity: 'error'
+                };
+            }
+
+            // PATTERN: Exponential backoff with jitter
+            async retry(fn, context = {}, attempt = 0) {
+                const key = context.key || fn.toString();
+
+                try {
+                    const result = await fn();
+                    this.retryAttempts[key] = 0;
+                    return result;
+                } catch (error) {
+                    this.retryAttempts[key] = (this.retryAttempts[key] || 0) + 1;
+
+                    if (this.retryAttempts[key] >= ENV.maxRetries) {
+                        this.retryAttempts[key] = 0;
+                        throw error;
+                    }
+
+                    // Exponential backoff with jitter
+                    const delay = ENV.retryDelay * Math.pow(2, this.retryAttempts[key]) +
+                                 Math.random() * 1000;
+
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                    return this.retry(fn, context, attempt + 1);
+                }
+            }
+        }
+
+        const errorHandler = new ErrorHandler();
+
+        // ========== UI Feedback System ==========
+        class UIFeedback {
+            showConnectionStatus(status, message) {
+                const banner = document.getElementById('connectionStatus');
+                const statusMessage = document.getElementById('statusMessage');
+                const icon = banner.querySelector('.status-icon');
+
+                statusMessage.textContent = message;
+                banner.className = `connection-status show ${status}`;
+                icon.className = `status-icon ${status}`;
+
+                if (status === 'online' || status === 'development') {
+                    setTimeout(() => {
+                        banner.classList.remove('show');
+                    }, 3000);
+                }
+            }
+
+            showError(element, message, severity = 'error') {
+                const errorDiv = document.createElement('div');
+                errorDiv.className = `error-message ${severity}`;
+                errorDiv.innerHTML = `
+                    ${message}
+                    ${severity === 'error' ? '<button class="retry-button" onclick="location.reload()">Refresh Page</button>' : ''}
+                `;
+
+                if (element) {
+                    element.appendChild(errorDiv);
+                    setTimeout(() => errorDiv.remove(), 10000);
+                }
+            }
+
+            showProductSkeleton(container, count = 6) {
+                container.innerHTML = '';
+                for (let i = 0; i < count; i++) {
+                    const skeleton = document.createElement('div');
+                    skeleton.className = 'product-skeleton skeleton';
+                    container.appendChild(skeleton);
+                }
+            }
+
+            showDevBadge() {
+                if (ENV.isDevelopment) {
+                    const badge = document.getElementById('devBadge');
+                    badge.classList.remove('hidden');
+                    badge.onclick = () => {
+                        alert(`Development Mode\n\nEnvironment: ${window.location.hostname}\nAPI: ${ENV.checkoutApiUrl}\nStripe: ${connectionState.stripeConfigured ? 'Configured' : 'Not Configured'}`);
+                    };
+                }
+            }
+        }
+
+        const uiFeedback = new UIFeedback();
+
+        // ========== Connection Monitoring ==========
+        class ConnectionMonitor {
+            constructor() {
+                this.setupListeners();
+                this.checkInitialState();
+            }
+
+            setupListeners() {
+                window.addEventListener('online', () => this.handleConnectionChange(true));
+                window.addEventListener('offline', () => this.handleConnectionChange(false));
+
+                // Check API availability every 30 seconds
+                setInterval(() => this.checkApiHealth(), 30000);
+            }
+
+            handleConnectionChange(isOnline) {
+                connectionState.online = isOnline;
+
+                if (isOnline) {
+                    uiFeedback.showConnectionStatus('online', 'Connection restored');
+                    this.checkApiHealth();
+                    if (products.length === 0) {
+                        loadProducts();
+                    }
+                } else {
+                    uiFeedback.showConnectionStatus('offline', 'No internet connection - Some features may be limited');
+                }
+            }
+
+            async checkInitialState() {
+                if (!navigator.onLine) {
+                    uiFeedback.showConnectionStatus('offline', 'No internet connection');
+                    return;
+                }
+
+                if (ENV.isDevelopment) {
+                    uiFeedback.showConnectionStatus('development',
+                        'Development Mode - Using test configuration');
+                }
+
+                await this.checkApiHealth();
+            }
+
+            async checkApiHealth() {
+                try {
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => controller.abort(), 5000);
+
+                    const response = await fetch(ENV.checkoutApiUrl, {
+                        method: 'OPTIONS',
+                        signal: controller.signal
+                    });
+
+                    clearTimeout(timeoutId);
+                    connectionState.apiAvailable = response.ok;
+                    connectionState.lastCheck = Date.now();
+
+                    if (!response.ok && ENV.isDevelopment) {
+                        console.warn('Checkout API not responding - Using fallback mode');
+                    }
+                } catch (error) {
+                    connectionState.apiAvailable = false;
+                    if (ENV.isDevelopment) {
+                        console.warn('Checkout API health check failed:', error);
+                    }
+                }
+            }
+        }
+
+        // Initialize connection monitoring
+        const connectionMonitor = new ConnectionMonitor();
+
+        // ========== Product Loading with Error Handling ==========
         async function loadProducts() {
+            const container = document.getElementById('products');
+
             try {
-                const response = await fetch('products.json');
+                // Show loading skeletons
+                uiFeedback.showProductSkeleton(container);
+
+                // Attempt to load products with retry
+                const response = await errorHandler.retry(
+                    async () => {
+                        const res = await fetch('products.json');
+                        if (!res.ok) throw new Error(`Failed to load products: ${res.status}`);
+                        return res;
+                    },
+                    { key: 'loadProducts' }
+                );
+
                 products = await response.json();
+
+                // Add placeholder image for missing product images
+                products = products.map(product => ({
+                    ...product,
+                    image: product.image || 'images/placeholder_product.png'
+                }));
+
                 initializeCategories();
                 renderFilterPills();
                 renderProducts();
+
+                // Show dev badge if in development
+                uiFeedback.showDevBadge();
+
             } catch (error) {
-                console.error('Error loading products:', error);
-                document.getElementById('products').innerHTML =
-                    '<div style="text-align: center; padding: 2rem;">Error loading products. Please refresh.</div>';
+                const errorInfo = errorHandler.handle(error, { action: 'loadProducts' });
+
+                container.innerHTML = `
+                    <div class="no-results">
+                        <h3>${errorInfo.title}</h3>
+                        <p>${errorInfo.message}</p>
+                        <button class="retry-button" onclick="loadProducts()">
+                            Try Again
+                        </button>
+                        ${ENV.isDevelopment ? `
+                            <p style="margin-top: 1rem; color: #666; font-size: 0.85rem;">
+                                Dev Mode: Check console for details
+                            </p>
+                        ` : ''}
+                    </div>
+                `;
             }
         }
 
@@ -932,11 +1407,11 @@
             buyBtn.textContent = `BUY - SIZE ${size}`;
         }
 
-        // Handle checkout
+        // ========== Enhanced Checkout Handling ==========
         async function handleCheckout(e) {
             const productId = e.target.dataset.product;
             const selectedSize = selectedSizes[productId];
-            
+
             if (!selectedSize) {
                 return;
             }
@@ -944,52 +1419,102 @@
             const product = products.find(p => p.id === productId);
             const buyBtn = e.target;
             const errorDiv = document.getElementById(`error-${productId}`);
-            
+
             // Clear previous errors
             errorDiv.innerHTML = '';
-            
+
             // Show loading state
             buyBtn.classList.add('loading');
             buyBtn.disabled = true;
 
             try {
-                const response = await fetch(CHECKOUT_API, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
+                // Check if we're in development mode without API
+                if (ENV.isDevelopment && !connectionState.apiAvailable) {
+                    throw new Error('Development mode - Checkout API not configured');
+                }
+
+                // Attempt checkout with retry mechanism
+                const response = await errorHandler.retry(
+                    async () => {
+                        const controller = new AbortController();
+                        const timeoutId = setTimeout(() => controller.abort(), 10000);
+
+                        const res = await fetch(ENV.checkoutApiUrl, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                productId: productId,
+                                skuId: selectedSize.skuId,
+                                priceId: selectedSize.priceId
+                            }),
+                            signal: controller.signal
+                        });
+
+                        clearTimeout(timeoutId);
+                        return res;
                     },
-                    body: JSON.stringify({
-                        productId: productId,
-                        skuId: selectedSize.skuId,
-                        priceId: selectedSize.priceId
-                    })
-                });
+                    { key: `checkout-${productId}` }
+                );
 
                 const data = await response.json();
 
                 if (data.error) {
                     if (data.error.includes('sold out')) {
-                        errorDiv.innerHTML = '<div class="error-message">Item just sold out! Refreshing...</div>';
-                        setTimeout(() => {
-                            window.location.reload();
-                        }, 2000);
+                        errorDiv.innerHTML = `
+                            <div class="error-message warning">
+                                This item just sold out! Refreshing inventory...
+                            </div>
+                        `;
+                        setTimeout(() => window.location.reload(), 2000);
                     } else {
                         throw new Error(data.error);
                     }
                 } else if (data.checkoutUrl) {
+                    // Success - redirect to checkout
                     window.location.href = data.checkoutUrl;
                 }
+
             } catch (error) {
-                console.error('Checkout error:', error);
-                
-                // Fallback to direct Stripe link
-                if (product.fallbackLink) {
-                    errorDiv.innerHTML = '<div class="error-message">Connection issue. Redirecting to backup checkout...</div>';
-                    setTimeout(() => {
-                        window.location.href = product.fallbackLink;
-                    }, 2000);
+                const errorInfo = errorHandler.handle(error, {
+                    action: 'checkout',
+                    productId
+                });
+
+                // Development mode message
+                if (ENV.isDevelopment) {
+                    errorDiv.innerHTML = `
+                        <div class="error-message warning">
+                            <strong>Development Mode</strong><br>
+                            Checkout API is not configured yet.<br>
+                            ${product.fallbackLink ?
+                                'Using fallback link in 3 seconds...' :
+                                'In production, this will process payments.'}
+                        </div>
+                    `;
+
+                    if (product.fallbackLink) {
+                        setTimeout(() => {
+                            window.location.href = product.fallbackLink;
+                        }, 3000);
+                    }
                 } else {
-                    errorDiv.innerHTML = '<div class="error-message">Checkout temporarily unavailable. Please try again.</div>';
+                    // Production error handling
+                    errorDiv.innerHTML = `
+                        <div class="error-message ${errorInfo.severity}">
+                            ${errorInfo.message}
+                            ${product.fallbackLink ? `
+                                <br><small>Redirecting to backup checkout...</small>
+                            ` : ''}
+                        </div>
+                    `;
+
+                    if (product.fallbackLink) {
+                        setTimeout(() => {
+                            window.location.href = product.fallbackLink;
+                        }, 2000);
+                    }
                 }
             } finally {
                 buyBtn.classList.remove('loading');
@@ -997,19 +1522,11 @@
             }
         }
 
-        // Detect mobile payment methods
+        // ========== Mobile Payment Detection ==========
         if (window.PaymentRequest) {
-            console.log('Payment Request API available');
+            console.log('Payment Request API available - Apple Pay/Google Pay supported');
+            connectionState.mobilePaymentsAvailable = true;
         }
-
-        // Handle network issues
-        window.addEventListener('online', () => {
-            console.log('Connection restored');
-        });
-
-        window.addEventListener('offline', () => {
-            alert('Connection lost. Please check your internet.');
-        });
 
         // Lightbox functionality
         let currentImageIndex = 0;

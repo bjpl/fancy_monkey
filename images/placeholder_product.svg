@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="none">
+  <rect width="400" height="400" fill="#F5F5F5"/>
+  <rect x="1" y="1" width="398" height="398" stroke="#E0E0E0" stroke-width="2" stroke-dasharray="8 4"/>
+  <g transform="translate(200, 180)">
+    <!-- Monkey icon placeholder -->
+    <circle cx="0" cy="0" r="50" fill="#E0E0E0"/>
+    <circle cx="-15" cy="-10" r="8" fill="#F5F5F5"/>
+    <circle cx="15" cy="-10" r="8" fill="#F5F5F5"/>
+    <path d="M -20 15 Q 0 25 20 15" stroke="#F5F5F5" stroke-width="3" fill="none" stroke-linecap="round"/>
+  </g>
+  <text x="200" y="260" font-family="-apple-system, system-ui, sans-serif" font-size="14" fill="#999" text-anchor="middle">COMING SOON</text>
+</svg>
