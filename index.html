@@ -1637,6 +1637,12 @@
 
                 // Handle fallback redirect with countdown
                 if (product.fallbackLink) {
+                    // Add size to fallback URL if selected
+                    let fallbackUrl = product.fallbackLink;
+                    if (selectedSize && selectedSize.size) {
+                        fallbackUrl += `&size=${encodeURIComponent(selectedSize.size)}`;
+                    }
+
                     let countdown = 3;
                     const countdownInterval = setInterval(() => {
                         const countdownEl = errorDiv.querySelector('.countdown');
@@ -1645,7 +1651,7 @@
                             countdown--;
                             if (countdown < 0) {
                                 clearInterval(countdownInterval);
-                                window.location.href = product.fallbackLink;
+                                window.location.href = fallbackUrl;
                             }
                         }
                     }, 1000);
@@ -1656,7 +1662,7 @@
                         if (messageText) {
                             messageText.innerHTML += `
                                 <br><strong style="font-size: 1.2em">
-                                    🍌 Swinging to backup checkout in <span class="countdown">3</span>...
+                                    🍌 Swinging to checkout info in <span class="countdown">3</span>...
                                 </strong>
                             `;
                         }

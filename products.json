@@ -34,7 +34,7 @@
                 "soldOut": false
             }
         },
-        "fallbackLink": "https://buy.stripe.com/test_midnight_emerald_hoodie"
+        "fallbackLink": "/checkout-fallback.html?product=MIDNIGHT%20EMERALD%20HOODIE"
     },
     {
         "id": "prod_hoodie_002",
@@ -71,7 +71,7 @@
                 "soldOut": false
             }
         },
-        "fallbackLink": "https://buy.stripe.com/test_shadow_viper_hoodie"
+        "fallbackLink": "/checkout-fallback.html?product=SHADOW%20VIPER%20HOODIE"
     },
     {
         "id": "prod_hoodie_003",
@@ -108,7 +108,7 @@
                 "soldOut": false
             }
         },
-        "fallbackLink": "https://buy.stripe.com/test_arctic_flame_hoodie"
+        "fallbackLink": "/checkout-fallback.html?product=ARCTIC%20FLAME%20HOODIE"
     },
     {
         "id": "prod_hoodie_004",
@@ -145,7 +145,7 @@
                 "soldOut": false
             }
         },
-        "fallbackLink": "https://buy.stripe.com/test_crimson_ghost_hoodie"
+        "fallbackLink": "/checkout-fallback.html?product=CRIMSON%20GHOST%20HOODIE"
     },
     {
         "id": "prod_hoodie_005",
@@ -182,7 +182,7 @@
                 "soldOut": false
             }
         },
-        "fallbackLink": "https://buy.stripe.com/test_ruby_cloud_hoodie"
+        "fallbackLink": "/checkout-fallback.html?product=RUBY%20CLOUD%20HOODIE"
     },
     {
         "id": "prod_tshirt_001",
@@ -219,7 +219,7 @@
                 "soldOut": false
             }
         },
-        "fallbackLink": "https://buy.stripe.com/test_classic_monkey_tee"
+        "fallbackLink": "/checkout-fallback.html?product=CLASSIC%20MONKEY%20TEE"
     },
     {
         "id": "prod_tshirt_002",
@@ -256,7 +256,7 @@
                 "soldOut": false
             }
         },
-        "fallbackLink": "https://buy.stripe.com/test_gradient_dreams_tee"
+        "fallbackLink": "/checkout-fallback.html?product=GRADIENT%20DREAMS%20TEE"
     },
     {
         "id": "prod_tshirt_003",
@@ -293,7 +293,7 @@
                 "soldOut": false
             }
         },
-        "fallbackLink": "https://buy.stripe.com/test_minimal_logo_tee"
+        "fallbackLink": "/checkout-fallback.html?product=MINIMAL%20LOGO%20TEE"
     },
     {
         "id": "prod_sticker_001",
@@ -309,7 +309,7 @@
                 "soldOut": false
             }
         },
-        "fallbackLink": "https://buy.stripe.com/test_logo_sticker"
+        "fallbackLink": "/checkout-fallback.html?product=FANCY%20MONKEY%20LOGO%20STICKER"
     },
     {
         "id": "prod_sticker_002",
@@ -325,7 +325,7 @@
                 "soldOut": false
             }
         },
-        "fallbackLink": "https://buy.stripe.com/test_holo_sticker_pack"
+        "fallbackLink": "/checkout-fallback.html?product=HOLOGRAPHIC%20PACK%20(5%20STICKERS)"
     },
     {
         "id": "prod_sticker_003",
@@ -341,7 +341,7 @@
                 "soldOut": false
             }
         },
-        "fallbackLink": "https://buy.stripe.com/test_mini_sticker_set"
+        "fallbackLink": "/checkout-fallback.html?product=MINI%20STICKER%20SET%20(10%20PACK)"
     },
     {
         "id": "prod_hanging_001",
@@ -362,7 +362,7 @@
                 "soldOut": false
             }
         },
-        "fallbackLink": "https://buy.stripe.com/test_canvas_dreams"
+        "fallbackLink": "/checkout-fallback.html?product=CANVAS%20WALL%20ART%20-%20MONKEY%20DREAMS"
     },
     {
         "id": "prod_hanging_002",
@@ -383,7 +383,7 @@
                 "soldOut": false
             }
         },
-        "fallbackLink": "https://buy.stripe.com/test_tapestry_vibes"
+        "fallbackLink": "/checkout-fallback.html?product=TAPESTRY%20-%20FANCY%20VIBES"
     },
     {
         "id": "prod_hanging_003",
@@ -399,7 +399,7 @@
                 "soldOut": false
             }
         },
-        "fallbackLink": "https://buy.stripe.com/test_metal_geometric"
+        "fallbackLink": "/checkout-fallback.html?product=METAL%20POSTER%20-%20GEOMETRIC%20MONKEY"
     },
     {
         "id": "prod_notebook_001",
@@ -415,7 +415,7 @@
                 "soldOut": false
             }
         },
-        "fallbackLink": "https://buy.stripe.com/test_journal_black"
+        "fallbackLink": "/checkout-fallback.html?product=HARDCOVER%20JOURNAL%20-%20BLACK%20EDITION"
     },
     {
         "id": "prod_notebook_002",
@@ -431,7 +431,7 @@
                 "soldOut": false
             }
         },
-        "fallbackLink": "https://buy.stripe.com/test_sketchbook_artist"
+        "fallbackLink": "/checkout-fallback.html?product=SPIRAL%20SKETCHBOOK%20-%20ARTIST%20SERIES"
     },
     {
         "id": "prod_notebook_003",
@@ -447,6 +447,6 @@
                 "soldOut": false
             }
         },
-        "fallbackLink": "https://buy.stripe.com/test_pocket_notebook_set"
+        "fallbackLink": "/checkout-fallback.html?product=POCKET%20NOTEBOOK%20SET%20(3%20PACK)"
     }
 ]
