@@ -271,14 +271,207 @@
             font-size: 0.8rem;
         }
 
+        /* Category Filter Styles */
+        .filter-section {
+            border-bottom: 1px solid #000;
+            background: #fff;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .filter-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem 1rem;
+        }
+
+        .filter-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .filter-title {
+            font-size: 0.85rem;
+            letter-spacing: 0.15em;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .filter-clear {
+            background: none;
+            border: none;
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            text-decoration: underline;
+            cursor: pointer;
+            padding: 0;
+            font-weight: 500;
+            transition: opacity 0.2s;
+        }
+
+        .filter-clear:hover {
+            opacity: 0.6;
+        }
+
+        .filter-pills {
+            display: flex;
+            gap: 0.75rem;
+            overflow-x: auto;
+            padding-bottom: 0.25rem;
+            scrollbar-width: thin;
+            scrollbar-color: #000 transparent;
+        }
+
+        .filter-pills::-webkit-scrollbar {
+            height: 4px;
+        }
+
+        .filter-pills::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .filter-pills::-webkit-scrollbar-thumb {
+            background: #000;
+            border-radius: 2px;
+        }
+
+        .filter-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1.2rem;
+            border: 1px solid #000;
+            background: #fff;
+            cursor: pointer;
+            white-space: nowrap;
+            font-size: 0.9rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            font-weight: 500;
+        }
+
+        .filter-pill::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background: #000;
+            transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: -1;
+        }
+
+        .filter-pill:hover::before {
+            width: 100%;
+        }
+
+        .filter-pill:hover {
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .filter-pill.active {
+            background: #000;
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .filter-pill.active::before {
+            width: 100%;
+        }
+
+        .filter-count {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 20px;
+            height: 20px;
+            padding: 0 4px;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            transition: all 0.3s;
+        }
+
+        .filter-pill:hover .filter-count,
+        .filter-pill.active .filter-count {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Product Card Animations */
+        .product {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .product.hidden {
+            opacity: 0;
+            transform: translateY(20px);
+            display: none;
+        }
+
+        .product.filtering {
+            animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* No Results Message */
+        .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 4rem 2rem;
+            color: #666;
+        }
+
+        .no-results h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: #000;
+        }
+
         @media (max-width: 640px) {
             h1 {
                 font-size: 1.5rem;
             }
-            
+
             .products {
                 grid-template-columns: 1fr;
                 padding: 1rem;
+            }
+
+            .filter-section {
+                position: static;
+            }
+
+            .filter-container {
+                padding: 1rem;
+            }
+
+            .filter-pill {
+                padding: 0.5rem 1rem;
+                font-size: 0.85rem;
             }
         }
 
@@ -464,6 +657,21 @@
         NEXT DROP: FRIDAY MIDNIGHT EST
     </div>
 
+    <!-- Category Filter Section -->
+    <section class="filter-section">
+        <div class="filter-container">
+            <div class="filter-header">
+                <h2 class="filter-title">COLLECTIONS</h2>
+                <button class="filter-clear" id="clearFilter" style="display: none;">
+                    CLEAR FILTER
+                </button>
+            </div>
+            <div class="filter-pills" id="filterPills">
+                <!-- Category pills will be loaded here -->
+            </div>
+        </div>
+    </section>
+
     <main class="products" id="products">
         <!-- Products will be loaded here -->
     </main>
@@ -523,20 +731,124 @@
     <script>
         let products = [];
         let selectedSizes = {};
+        let activeFilter = 'all';
+        let categories = {};
         const CHECKOUT_API = 'https://fancymonkey-checkout.vercel.app/api/checkout'; // Update this after Vercel deployment
-        
+
         // Load products
         async function loadProducts() {
             try {
                 const response = await fetch('products.json');
                 products = await response.json();
+                initializeCategories();
+                renderFilterPills();
                 renderProducts();
             } catch (error) {
                 console.error('Error loading products:', error);
-                document.getElementById('products').innerHTML = 
+                document.getElementById('products').innerHTML =
                     '<div style="text-align: center; padding: 2rem;">Error loading products. Please refresh.</div>';
             }
         }
+
+        // Initialize categories with counts
+        function initializeCategories() {
+            categories = { all: products.length };
+            products.forEach(product => {
+                const category = product.category || 'other';
+                categories[category] = (categories[category] || 0) + 1;
+            });
+        }
+
+        // Render filter pills
+        function renderFilterPills() {
+            const container = document.getElementById('filterPills');
+            container.innerHTML = '';
+
+            // Category display names
+            const categoryNames = {
+                'all': 'All Products',
+                'hoodies': 'Hoodies',
+                't-shirts': 'T-Shirts',
+                'stickers': 'Stickers',
+                'hangings': 'Wall Art',
+                'notebooks': 'Notebooks'
+            };
+
+            Object.entries(categories).forEach(([category, count]) => {
+                const pill = document.createElement('button');
+                pill.className = `filter-pill ${category === 'all' ? 'active' : ''}`;
+                pill.dataset.category = category;
+                pill.innerHTML = `
+                    <span>${categoryNames[category] || category}</span>
+                    <span class="filter-count">${count}</span>
+                `;
+                pill.addEventListener('click', () => filterProducts(category));
+                container.appendChild(pill);
+            });
+        }
+
+        // Filter products with animation
+        function filterProducts(category) {
+            if (activeFilter === category) return;
+
+            // Update active filter
+            activeFilter = category;
+
+            // Update pill states
+            document.querySelectorAll('.filter-pill').forEach(pill => {
+                pill.classList.toggle('active', pill.dataset.category === category);
+            });
+
+            // Show/hide clear button
+            document.getElementById('clearFilter').style.display =
+                category === 'all' ? 'none' : 'block';
+
+            // Animate products
+            const productElements = document.querySelectorAll('.product');
+            let visibleCount = 0;
+
+            productElements.forEach((element, index) => {
+                const product = products[index];
+                const shouldShow = category === 'all' || product.category === category;
+
+                if (shouldShow) {
+                    visibleCount++;
+                    // Stagger the animation
+                    setTimeout(() => {
+                        element.classList.remove('hidden');
+                        element.classList.add('filtering');
+                    }, visibleCount * 50);
+                } else {
+                    element.classList.add('hidden');
+                    element.classList.remove('filtering');
+                }
+            });
+
+            // Show no results message if needed
+            const container = document.getElementById('products');
+            const noResultsElement = container.querySelector('.no-results');
+
+            if (visibleCount === 0) {
+                if (!noResultsElement) {
+                    const noResults = document.createElement('div');
+                    noResults.className = 'no-results';
+                    noResults.innerHTML = `
+                        <h3>No products found</h3>
+                        <p>Try selecting a different category</p>
+                    `;
+                    container.appendChild(noResults);
+                }
+            } else if (noResultsElement) {
+                noResultsElement.remove();
+            }
+        }
+
+        // Clear filter
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('clearFilter').addEventListener('click', () => {
+                filterProducts('all');
+            });
+        });
 
         // Render products
         function renderProducts() {
@@ -546,6 +858,7 @@
             products.forEach((product, index) => {
                 const productEl = document.createElement('div');
                 productEl.className = 'product';
+                productEl.dataset.category = product.category;
                 productEl.innerHTML = `
                     <img src="${product.image}" alt="${product.name}" loading="lazy" data-index="${index}">
                     <div class="product-info">
