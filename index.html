@@ -194,40 +194,133 @@
             font-size: 0.9rem;
         }
 
-        /* Error Handling UI */
+        /* Fun Error Handling UI */
         .error-message {
-            padding: 0.75rem;
-            background: #fff3cd;
-            color: #856404;
-            border: 1px solid #ffeeba;
-            border-radius: 4px;
+            padding: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            border-radius: 12px;
             text-align: center;
             margin-top: 0.5rem;
             font-size: 0.9rem;
-            animation: slideIn 0.3s ease;
+            animation: bounceIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
         }
 
-        .error-message.error {
-            background: #f8d7da;
-            color: #721c24;
-            border-color: #f5c6cb;
+        .error-message::before {
+            content: '🐵';
+            position: absolute;
+            font-size: 60px;
+            opacity: 0.1;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%) rotate(-15deg);
+        }
+
+        .error-message.warning {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            box-shadow: 0 4px 15px rgba(245, 87, 108, 0.3);
+        }
+
+        .error-message.warning::before {
+            content: '🙈';
         }
 
         .error-message.success {
-            background: #d4edda;
-            color: #155724;
-            border-color: #c3e6cb;
+            background: linear-gradient(135deg, #667eea 0%, #48bb78 100%);
+            box-shadow: 0 4px 15px rgba(72, 187, 120, 0.3);
         }
 
-        @keyframes slideIn {
-            from {
+        .error-message.success::before {
+            content: '🙊';
+        }
+
+        .error-message.info {
+            background: linear-gradient(135deg, #667eea 0%, #4299e1 100%);
+            box-shadow: 0 4px 15px rgba(66, 153, 225, 0.3);
+        }
+
+        .error-message.info::before {
+            content: '🙉';
+        }
+
+        .error-message-title {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.05em;
+        }
+
+        .error-message-text {
+            margin-bottom: 0.75rem;
+            line-height: 1.5;
+        }
+
+        .error-message-actions {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .error-action-btn {
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .error-action-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .error-action-btn.primary {
+            background: rgba(255, 255, 255, 0.9);
+            color: #764ba2;
+        }
+
+        .error-action-btn.primary:hover {
+            background: rgba(255, 255, 255, 1);
+        }
+
+        @keyframes bounceIn {
+            0% {
                 opacity: 0;
-                transform: translateY(-10px);
+                transform: scale(0.3) translateY(-20px);
             }
-            to {
+            50% {
+                opacity: 0.9;
+                transform: scale(1.05);
+            }
+            70% {
+                transform: scale(0.95);
+            }
+            100% {
                 opacity: 1;
-                transform: translateY(0);
+                transform: scale(1) translateY(0);
             }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+
+        .error-message.shake {
+            animation: shake 0.5s ease-in-out;
         }
 
         /* Connection Status Banner */
@@ -968,9 +1061,15 @@
             }
 
             handleNetworkError(error, context) {
+                const messages = [
+                    "Oops! The monkeys can't find the internet!",
+                    "Our banana phone line is down!",
+                    "The wifi bananas need recharging!"
+                ];
                 return {
-                    title: 'Connection Issue',
-                    message: 'Please check your internet connection and try again.',
+                    title: '🙈 Connection Gone Bananas',
+                    message: messages[Math.floor(Math.random() * messages.length)],
+                    subtitle: 'Check your internet and we\'ll swing back into action',
                     action: 'retry',
                     severity: 'warning'
                 };
@@ -978,21 +1077,25 @@
 
             handleServerError(error, context) {
                 return {
-                    title: 'Service Temporarily Unavailable',
+                    title: '🐵 Monkey Business Detected',
                     message: ENV.isDevelopment ?
-                        'The checkout service is not configured yet. Using fallback mode.' :
-                        'Our servers are experiencing high traffic. Please try again in a moment.',
+                        'Our checkout monkeys are still learning! They\'ll be trained soon.' :
+                        'Too many monkeys shopping at once!',
+                    subtitle: ENV.isDevelopment ?
+                        'Development mode - Checkout coming soon' :
+                        'Give us a banana break and try again',
                     action: 'retry',
-                    severity: 'error'
+                    severity: 'info'
                 };
             }
 
             handleStripeError(error, context) {
                 return {
-                    title: 'Payment System Setup',
+                    title: '🍌 Payment Banana Not Ripe Yet',
                     message: ENV.isDevelopment ?
-                        'Stripe is not configured yet. In production, this will process payments.' :
-                        'Payment processing is temporarily unavailable.',
+                        'Our payment monkeys are still setting up shop!' :
+                        'The payment tree is being watered',
+                    subtitle: 'We\'ll have a backup banana ready in 3 seconds...',
                     action: 'fallback',
                     severity: 'warning'
                 };
@@ -1000,21 +1103,28 @@
 
             handleNotFoundError(error, context) {
                 return {
-                    title: 'Service Not Found',
-                    message: 'The requested service is not available. Please try again later.',
+                    title: '🙊 Lost in the Jungle',
+                    message: 'We couldn\'t find that banana tree!',
+                    subtitle: 'Let\'s try a different path',
                     action: 'fallback',
                     severity: 'warning'
                 };
             }
 
             handleGenericError(error, context) {
+                const funMessages = [
+                    "A monkey wrench in our plans!",
+                    "Banana peel on the checkout floor!",
+                    "Our monkeys need a coffee break!"
+                ];
                 return {
-                    title: 'Something Went Wrong',
+                    title: '🙉 Monkey See, Monkey... Oops!',
                     message: ENV.isDevelopment ?
-                        `Error: ${error.message || 'Unknown error occurred'}` :
-                        'An unexpected error occurred. Please try again.',
+                        `Tech speak: ${error.message || 'Unknown banana error'}` :
+                        funMessages[Math.floor(Math.random() * funMessages.length)],
+                    subtitle: 'Don\'t worry, we\'re on it!',
                     action: 'retry',
-                    severity: 'error'
+                    severity: 'info'
                 };
             }
 
@@ -1064,17 +1174,47 @@
                 }
             }
 
-            showError(element, message, severity = 'error') {
+            showError(element, errorInfo, productId = null) {
                 const errorDiv = document.createElement('div');
-                errorDiv.className = `error-message ${severity}`;
+                errorDiv.className = `error-message ${errorInfo.severity || 'info'}`;
+
+                // Fun action buttons based on error type
+                let actionButtons = '';
+                if (errorInfo.action === 'retry') {
+                    actionButtons = `
+                        <button class="error-action-btn primary" onclick="location.reload()">
+                            🔄 Try Again
+                        </button>
+                        <button class="error-action-btn" onclick="this.closest('.error-message').remove()">
+                            Maybe Later
+                        </button>
+                    `;
+                } else if (errorInfo.action === 'fallback' && productId) {
+                    actionButtons = `
+                        <button class="error-action-btn primary" onclick="this.closest('.error-message').remove()">
+                            🍌 Got It!
+                        </button>
+                    `;
+                }
+
                 errorDiv.innerHTML = `
-                    ${message}
-                    ${severity === 'error' ? '<button class="retry-button" onclick="location.reload()">Refresh Page</button>' : ''}
+                    <div class="error-message-title">${errorInfo.title || '🐵 Oops!'}</div>
+                    <div class="error-message-text">
+                        ${errorInfo.message || 'Something went bananas!'}
+                        ${errorInfo.subtitle ? `<br><small style="opacity: 0.9">${errorInfo.subtitle}</small>` : ''}
+                    </div>
+                    ${actionButtons ? `<div class="error-message-actions">${actionButtons}</div>` : ''}
                 `;
 
                 if (element) {
+                    // Remove any existing error messages
+                    element.querySelectorAll('.error-message').forEach(el => el.remove());
                     element.appendChild(errorDiv);
-                    setTimeout(() => errorDiv.remove(), 10000);
+
+                    // Auto-remove after 15 seconds unless it has action buttons
+                    if (!actionButtons) {
+                        setTimeout(() => errorDiv.remove(), 15000);
+                    }
                 }
             }
 
@@ -1462,18 +1602,28 @@
 
                 if (data.error) {
                     if (data.error.includes('sold out')) {
-                        errorDiv.innerHTML = `
-                            <div class="error-message warning">
-                                This item just sold out! Refreshing inventory...
-                            </div>
-                        `;
-                        setTimeout(() => window.location.reload(), 2000);
+                        const soldOutInfo = {
+                            title: '🙈 Another Monkey Got It First!',
+                            message: 'This item just went bananas and sold out!',
+                            subtitle: 'Refreshing the jungle inventory...',
+                            severity: 'warning'
+                        };
+                        uiFeedback.showError(errorDiv, soldOutInfo);
+                        setTimeout(() => window.location.reload(), 3000);
                     } else {
                         throw new Error(data.error);
                     }
                 } else if (data.checkoutUrl) {
-                    // Success - redirect to checkout
-                    window.location.href = data.checkoutUrl;
+                    // Success - show quick success before redirect
+                    const successInfo = {
+                        title: '🎉 Banana Success!',
+                        message: 'Swinging you to checkout...',
+                        severity: 'success'
+                    };
+                    uiFeedback.showError(errorDiv, successInfo);
+                    setTimeout(() => {
+                        window.location.href = data.checkoutUrl;
+                    }, 500);
                 }
 
             } catch (error) {
@@ -1482,39 +1632,35 @@
                     productId
                 });
 
-                // Development mode message
-                if (ENV.isDevelopment) {
-                    errorDiv.innerHTML = `
-                        <div class="error-message warning">
-                            <strong>Development Mode</strong><br>
-                            Checkout API is not configured yet.<br>
-                            ${product.fallbackLink ?
-                                'Using fallback link in 3 seconds...' :
-                                'In production, this will process payments.'}
-                        </div>
-                    `;
+                // Show fun error message
+                uiFeedback.showError(errorDiv, errorInfo, productId);
 
-                    if (product.fallbackLink) {
-                        setTimeout(() => {
-                            window.location.href = product.fallbackLink;
-                        }, 3000);
-                    }
-                } else {
-                    // Production error handling
-                    errorDiv.innerHTML = `
-                        <div class="error-message ${errorInfo.severity}">
-                            ${errorInfo.message}
-                            ${product.fallbackLink ? `
-                                <br><small>Redirecting to backup checkout...</small>
-                            ` : ''}
-                        </div>
-                    `;
+                // Handle fallback redirect with countdown
+                if (product.fallbackLink) {
+                    let countdown = 3;
+                    const countdownInterval = setInterval(() => {
+                        const countdownEl = errorDiv.querySelector('.countdown');
+                        if (countdownEl) {
+                            countdownEl.textContent = countdown;
+                            countdown--;
+                            if (countdown < 0) {
+                                clearInterval(countdownInterval);
+                                window.location.href = product.fallbackLink;
+                            }
+                        }
+                    }, 1000);
 
-                    if (product.fallbackLink) {
-                        setTimeout(() => {
-                            window.location.href = product.fallbackLink;
-                        }, 2000);
-                    }
+                    // Update message with countdown
+                    setTimeout(() => {
+                        const messageText = errorDiv.querySelector('.error-message-text');
+                        if (messageText) {
+                            messageText.innerHTML += `
+                                <br><strong style="font-size: 1.2em">
+                                    🍌 Swinging to backup checkout in <span class="countdown">3</span>...
+                                </strong>
+                            `;
+                        }
+                    }, 100);
                 }
             } finally {
                 buyBtn.classList.remove('loading');
