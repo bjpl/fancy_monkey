@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="Fancy Monkey - Exclusive people clothes drops. Limited pieces. Timeless design.">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>Fancy Monkey</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+            cursor: url('assets/banana-cursor.png') 16 16, auto;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            background: #ffffff;
+            color: #000000;
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+            cursor: url('assets/banana-cursor.png') 16 16, auto;
+        }
+
+        a, button, .size-btn, .buy-btn {
+            cursor: url('assets/banana-cursor.png') 16 16, pointer !important;
+        }
+
+        header {
+            padding: 2rem 1rem;
+            text-align: center;
+            border-bottom: 1px solid #000;
+        }
+
+        .logo {
+            width: 120px;
+            height: auto;
+            margin: 0 auto 1rem;
+            display: block;
+        }
+
+        h1 {
+            font-size: 2rem;
+            letter-spacing: 0.2em;
+            font-weight: 900;
+        }
+
+        .tagline {
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .drop-info {
+            padding: 1rem;
+            text-align: center;
+            background: #000;
+            color: #fff;
+            font-size: 0.9rem;
+            letter-spacing: 0.05em;
+        }
+
+        .products {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .product {
+            text-align: center;
+        }
+
+        .product img {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 1;
+            object-fit: cover;
+            background: #f5f5f5;
+            border: 1px solid #000;
+            -webkit-user-drag: none;
+            user-select: none;
+            cursor: zoom-in;
+            transition: transform 0.3s ease;
+        }
+
+        .product img:hover {
+            transform: scale(1.02);
+        }
+
+        .product-info {
+            padding: 1rem 0;
+        }
+
+        .product-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.25rem;
+        }
+
+        .product-price {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-fit {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .size-selector {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .size-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid #000;
+            background: #fff;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            -webkit-appearance: none;
+            touch-action: manipulation;
+        }
+
+        .size-btn:hover:not(.sold-out) {
+            background: #000;
+            color: #fff;
+        }
+
+        .size-btn.selected {
+            background: #000;
+            color: #fff;
+        }
+
+        .size-btn.sold-out {
+            opacity: 0.3;
+            cursor: not-allowed;
+            text-decoration: line-through;
+        }
+
+        .buy-btn {
+            width: 100%;
+            padding: 1rem;
+            background: #000;
+            color: #fff;
+            border: none;
+            font-size: 1rem;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-weight: 700;
+            transition: opacity 0.2s;
+            -webkit-appearance: none;
+            touch-action: manipulation;
+        }
+
+        .buy-btn:hover:not(:disabled) {
+            opacity: 0.8;
+        }
+
+        .buy-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .buy-btn.loading {
+            position: relative;
+            color: transparent;
+        }
+
+        .buy-btn.loading::after {
+            content: 'Checking availability...';
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            color: #fff;
+            font-size: 0.9rem;
+        }
+
+        .error-message {
+            padding: 0.5rem;
+            background: #ff0000;
+            color: #fff;
+            text-align: center;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .sold-out-message {
+            padding: 1rem;
+            background: #f5f5f5;
+            text-align: center;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+        }
+
+        .monkey-section {
+            text-align: center;
+            padding: 3rem 1rem 2rem;
+        }
+
+        .monkey-graphic {
+            width: 250px;
+            height: auto;
+            max-width: 80%;
+            margin: 0 auto;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .monkey-graphic:hover {
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 640px) {
+            .monkey-graphic {
+                width: 180px;
+            }
+        }
+
+        footer {
+            border-top: 1px solid #000;
+            padding: 2rem 1rem;
+            text-align: center;
+            font-size: 0.85rem;
+        }
+
+        .footer-section {
+            margin: 1rem 0;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin: 1rem 0;
+        }
+
+        .footer-links a {
+            color: #000;
+            text-decoration: none;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        .legal {
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid #ccc;
+            color: #666;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 640px) {
+            h1 {
+                font-size: 1.5rem;
+            }
+            
+            .products {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+            }
+        }
+
+        .maintenance-notice {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #fff;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .maintenance-notice.active {
+            display: flex;
+        }
+
+        /* Lightbox Styles */
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            z-index: 10000;
+            cursor: zoom-out;
+        }
+
+        .lightbox.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .lightbox-content {
+            position: relative;
+            max-width: 90vw;
+            max-height: 90vh;
+            transform: scale(0.9);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .lightbox.active .lightbox-content {
+            transform: scale(1);
+        }
+
+        .lightbox img {
+            max-width: 100%;
+            max-height: 90vh;
+            width: auto;
+            height: auto;
+            display: block;
+            border: 2px solid #fff;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            cursor: default;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            width: 40px;
+            height: 40px;
+            background: transparent;
+            border: 2px solid #fff;
+            color: #fff;
+            font-size: 24px;
+            font-weight: 300;
+            line-height: 36px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+        }
+
+        .lightbox-close:hover {
+            background: #fff;
+            color: #000;
+            transform: rotate(90deg);
+        }
+
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            color: #000;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .lightbox-nav:hover {
+            background: #000;
+            color: #fff;
+        }
+
+        .lightbox-nav.prev {
+            left: 20px;
+        }
+
+        .lightbox-nav.next {
+            right: 20px;
+        }
+
+        .lightbox-nav.disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .lightbox-nav.disabled:hover {
+            background: rgba(255, 255, 255, 0.9);
+            color: #000;
+        }
+
+        .lightbox-caption {
+            position: absolute;
+            bottom: -40px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            color: #fff;
+            font-size: 14px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        @media (max-width: 640px) {
+            .lightbox-close {
+                top: 10px;
+                right: 10px;
+                background: rgba(0, 0, 0, 0.5);
+            }
+
+            .lightbox-nav {
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+            }
+
+            .lightbox-nav.prev {
+                left: 10px;
+            }
+
+            .lightbox-nav.next {
+                right: 10px;
+            }
+
+            .lightbox-caption {
+                bottom: 10px;
+                background: rgba(0, 0, 0, 0.7);
+                padding: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="assets/logo.png" alt="Fancy Monkey" class="logo">
+        <h1>FANCY MONKEY</h1>
+        <p class="tagline">Exclusive People Clothes</p>
+    </header>
+
+    <div class="drop-info" id="dropInfo">
+        NEXT DROP: FRIDAY MIDNIGHT EST
+    </div>
+
+    <main class="products" id="products">
+        <!-- Products will be loaded here -->
+    </main>
+
+    <div class="monkey-section">
+        <img src="assets/monkey_full.png" alt="Fancy Monkey Mascot" class="monkey-graphic">
+    </div>
+
+    <footer>
+        <div class="footer-section">
+            <strong>CUSTOMER SERVICE</strong><br>
+            Email: help@fancymonkey.com<br>
+            Instagram: @fancymonkey<br>
+            Response time: Within 24 hours
+        </div>
+
+        <div class="footer-section">
+            <strong>SHIPPING</strong><br>
+            US Only (International coming soon)<br>
+            Processing: 1-3 business days<br>
+            Shipping: USPS/UPS with tracking<br>
+            You will receive tracking within 48 hours
+        </div>
+
+        <div class="footer-links">
+            <a href="#size-chart">Size Chart</a>
+            <a href="#returns">Returns</a>
+            <a href="https://instagram.com/fancymonkey" target="_blank">Instagram</a>
+        </div>
+
+        <div class="legal">
+            <p>All prices in USD. Tax calculated at checkout.</p>
+            <p>14-day returns on unworn items. See return policy for details.</p>
+            <p>By purchasing, you agree to our terms and conditions.</p>
+            <p>© 2024 Fancy Monkey. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <div class="maintenance-notice" id="maintenance">
+        <div>
+            <h2>Site Under Maintenance</h2>
+            <p>We'll be back shortly. Follow @fancymonkey for updates.</p>
+        </div>
+    </div>
+
+    <!-- Lightbox Modal -->
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-content">
+            <button class="lightbox-close" id="lightbox-close">×</button>
+            <button class="lightbox-nav prev" id="lightbox-prev">‹</button>
+            <button class="lightbox-nav next" id="lightbox-next">›</button>
+            <img id="lightbox-image" src="" alt="">
+            <div class="lightbox-caption" id="lightbox-caption"></div>
+        </div>
+    </div>
+
+    <script>
+        let products = [];
+        let selectedSizes = {};
+        const CHECKOUT_API = 'https://fancymonkey-checkout.vercel.app/api/checkout'; // Update this after Vercel deployment
+        
+        // Load products
+        async function loadProducts() {
+            try {
+                const response = await fetch('products.json');
+                products = await response.json();
+                renderProducts();
+            } catch (error) {
+                console.error('Error loading products:', error);
+                document.getElementById('products').innerHTML = 
+                    '<div style="text-align: center; padding: 2rem;">Error loading products. Please refresh.</div>';
+            }
+        }
+
+        // Render products
+        function renderProducts() {
+            const container = document.getElementById('products');
+            container.innerHTML = '';
+
+            products.forEach((product, index) => {
+                const productEl = document.createElement('div');
+                productEl.className = 'product';
+                productEl.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}" loading="lazy" data-index="${index}">
+                    <div class="product-info">
+                        <div class="product-name">${product.name}</div>
+                        <div class="product-price">$${product.price} USD</div>
+                        ${product.fit ? `<div class="product-fit">${product.fit}</div>` : ''}
+                        <div class="size-selector" id="sizes-${product.id}">
+                            ${Object.entries(product.sizes).map(([size, data]) => `
+                                <button 
+                                    class="size-btn ${data.soldOut ? 'sold-out' : ''}"
+                                    data-product="${product.id}"
+                                    data-size="${size}"
+                                    data-sku="${data.skuId}"
+                                    data-price="${data.priceId}"
+                                    ${data.soldOut ? 'disabled' : ''}
+                                >
+                                    ${size}
+                                </button>
+                            `).join('')}
+                        </div>
+                        <button 
+                            class="buy-btn" 
+                            id="buy-${product.id}"
+                            data-product="${product.id}"
+                            disabled
+                        >
+                            SELECT SIZE
+                        </button>
+                        <div id="error-${product.id}"></div>
+                    </div>
+                `;
+                container.appendChild(productEl);
+            });
+
+            // Add event listeners
+            document.querySelectorAll('.size-btn:not(.sold-out)').forEach(btn => {
+                btn.addEventListener('click', selectSize);
+            });
+
+            document.querySelectorAll('.buy-btn').forEach(btn => {
+                btn.addEventListener('click', handleCheckout);
+            });
+
+            // Add lightbox click handlers to product images
+            document.querySelectorAll('.product img').forEach(img => {
+                img.addEventListener('click', openLightbox);
+            });
+        }
+
+        // Handle size selection
+        function selectSize(e) {
+            const productId = e.target.dataset.product;
+            const size = e.target.dataset.size;
+            
+            // Clear previous selection
+            document.querySelectorAll(`#sizes-${productId} .size-btn`).forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            
+            // Select new size
+            e.target.classList.add('selected');
+            selectedSizes[productId] = {
+                size: size,
+                skuId: e.target.dataset.sku,
+                priceId: e.target.dataset.price
+            };
+            
+            // Update buy button
+            const buyBtn = document.getElementById(`buy-${productId}`);
+            buyBtn.disabled = false;
+            buyBtn.textContent = `BUY - SIZE ${size}`;
+        }
+
+        // Handle checkout
+        async function handleCheckout(e) {
+            const productId = e.target.dataset.product;
+            const selectedSize = selectedSizes[productId];
+            
+            if (!selectedSize) {
+                return;
+            }
+
+            const product = products.find(p => p.id === productId);
+            const buyBtn = e.target;
+            const errorDiv = document.getElementById(`error-${productId}`);
+            
+            // Clear previous errors
+            errorDiv.innerHTML = '';
+            
+            // Show loading state
+            buyBtn.classList.add('loading');
+            buyBtn.disabled = true;
+
+            try {
+                const response = await fetch(CHECKOUT_API, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        productId: productId,
+                        skuId: selectedSize.skuId,
+                        priceId: selectedSize.priceId
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.error) {
+                    if (data.error.includes('sold out')) {
+                        errorDiv.innerHTML = '<div class="error-message">Item just sold out! Refreshing...</div>';
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 2000);
+                    } else {
+                        throw new Error(data.error);
+                    }
+                } else if (data.checkoutUrl) {
+                    window.location.href = data.checkoutUrl;
+                }
+            } catch (error) {
+                console.error('Checkout error:', error);
+                
+                // Fallback to direct Stripe link
+                if (product.fallbackLink) {
+                    errorDiv.innerHTML = '<div class="error-message">Connection issue. Redirecting to backup checkout...</div>';
+                    setTimeout(() => {
+                        window.location.href = product.fallbackLink;
+                    }, 2000);
+                } else {
+                    errorDiv.innerHTML = '<div class="error-message">Checkout temporarily unavailable. Please try again.</div>';
+                }
+            } finally {
+                buyBtn.classList.remove('loading');
+                buyBtn.disabled = false;
+            }
+        }
+
+        // Detect mobile payment methods
+        if (window.PaymentRequest) {
+            console.log('Payment Request API available');
+        }
+
+        // Handle network issues
+        window.addEventListener('online', () => {
+            console.log('Connection restored');
+        });
+
+        window.addEventListener('offline', () => {
+            alert('Connection lost. Please check your internet.');
+        });
+
+        // Lightbox functionality
+        let currentImageIndex = 0;
+
+        function openLightbox(e) {
+            const index = parseInt(e.target.dataset.index);
+            currentImageIndex = index;
+            updateLightboxImage();
+            document.getElementById('lightbox').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function updateLightboxImage() {
+            const product = products[currentImageIndex];
+            const lightboxImage = document.getElementById('lightbox-image');
+            const lightboxCaption = document.getElementById('lightbox-caption');
+            const prevBtn = document.getElementById('lightbox-prev');
+            const nextBtn = document.getElementById('lightbox-next');
+
+            lightboxImage.src = product.image;
+            lightboxImage.alt = product.name;
+            lightboxCaption.textContent = `${product.name} - $${product.price} USD`;
+
+            // Update navigation buttons
+            if (currentImageIndex === 0) {
+                prevBtn.classList.add('disabled');
+            } else {
+                prevBtn.classList.remove('disabled');
+            }
+
+            if (currentImageIndex === products.length - 1) {
+                nextBtn.classList.add('disabled');
+            } else {
+                nextBtn.classList.remove('disabled');
+            }
+        }
+
+        function navigateLightbox(direction) {
+            if (direction === 'prev' && currentImageIndex > 0) {
+                currentImageIndex--;
+                updateLightboxImage();
+            } else if (direction === 'next' && currentImageIndex < products.length - 1) {
+                currentImageIndex++;
+                updateLightboxImage();
+            }
+        }
+
+        // Lightbox event listeners
+        document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+        document.getElementById('lightbox').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeLightbox();
+            }
+        });
+
+        document.getElementById('lightbox-prev').addEventListener('click', function(e) {
+            e.stopPropagation();
+            navigateLightbox('prev');
+        });
+
+        document.getElementById('lightbox-next').addEventListener('click', function(e) {
+            e.stopPropagation();
+            navigateLightbox('next');
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (document.getElementById('lightbox').classList.contains('active')) {
+                if (e.key === 'Escape') {
+                    closeLightbox();
+                } else if (e.key === 'ArrowLeft') {
+                    navigateLightbox('prev');
+                } else if (e.key === 'ArrowRight') {
+                    navigateLightbox('next');
+                }
+            }
+        });
+
+        // Prevent lightbox image from closing when clicked
+        document.getElementById('lightbox-image').addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', loadProducts);
+
+        // Prevent image saving on iOS
+        document.addEventListener('contextmenu', e => e.preventDefault());
+    </script>
+</body>
+</html>

@@ -1,0 +1,452 @@
+[
+    {
+        "id": "prod_hoodie_001",
+        "category": "hoodies",
+        "name": "MIDNIGHT EMERALD HOODIE",
+        "price": 58,
+        "image": "images/black_hoodie_green_1.png",
+        "fit": "Premium oversized fit - Heavy weight cotton blend for all people",
+        "description": "Comfortable people clothes designed for everyday wear",
+        "sizes": {
+            "S": {
+                "skuId": "sku_midnight_emerald_s",
+                "priceId": "price_midnight_emerald_s",
+                "soldOut": false
+            },
+            "M": {
+                "skuId": "sku_midnight_emerald_m",
+                "priceId": "price_midnight_emerald_m",
+                "soldOut": false
+            },
+            "L": {
+                "skuId": "sku_midnight_emerald_l",
+                "priceId": "price_midnight_emerald_l",
+                "soldOut": false
+            },
+            "XL": {
+                "skuId": "sku_midnight_emerald_xl",
+                "priceId": "price_midnight_emerald_xl",
+                "soldOut": false
+            },
+            "XXL": {
+                "skuId": "sku_midnight_emerald_xxl",
+                "priceId": "price_midnight_emerald_xxl",
+                "soldOut": false
+            }
+        },
+        "fallbackLink": "https://buy.stripe.com/test_midnight_emerald_hoodie"
+    },
+    {
+        "id": "prod_hoodie_002",
+        "category": "hoodies",
+        "name": "SHADOW VIPER HOODIE",
+        "price": 62,
+        "image": "images/black_hoodie_green_2.png",
+        "fit": "Limited Edition - Signature oversized silhouette",
+        "description": "Exclusive people clothes with unique design elements",
+        "sizes": {
+            "S": {
+                "skuId": "sku_shadow_viper_s",
+                "priceId": "price_shadow_viper_s",
+                "soldOut": false
+            },
+            "M": {
+                "skuId": "sku_shadow_viper_m",
+                "priceId": "price_shadow_viper_m",
+                "soldOut": false
+            },
+            "L": {
+                "skuId": "sku_shadow_viper_l",
+                "priceId": "price_shadow_viper_l",
+                "soldOut": false
+            },
+            "XL": {
+                "skuId": "sku_shadow_viper_xl",
+                "priceId": "price_shadow_viper_xl",
+                "soldOut": false
+            },
+            "XXL": {
+                "skuId": "sku_shadow_viper_xxl",
+                "priceId": "price_shadow_viper_xxl",
+                "soldOut": false
+            }
+        },
+        "fallbackLink": "https://buy.stripe.com/test_shadow_viper_hoodie"
+    },
+    {
+        "id": "prod_hoodie_003",
+        "category": "hoodies",
+        "name": "ARCTIC FLAME HOODIE",
+        "price": 55,
+        "image": "images/white_hoodie_red_1.png",
+        "fit": "Relaxed comfort fit - Soft brushed interior",
+        "description": "Cozy people clothes perfect for any season",
+        "sizes": {
+            "S": {
+                "skuId": "sku_arctic_flame_s",
+                "priceId": "price_arctic_flame_s",
+                "soldOut": false
+            },
+            "M": {
+                "skuId": "sku_arctic_flame_m",
+                "priceId": "price_arctic_flame_m",
+                "soldOut": false
+            },
+            "L": {
+                "skuId": "sku_arctic_flame_l",
+                "priceId": "price_arctic_flame_l",
+                "soldOut": false
+            },
+            "XL": {
+                "skuId": "sku_arctic_flame_xl",
+                "priceId": "price_arctic_flame_xl",
+                "soldOut": false
+            },
+            "XXL": {
+                "skuId": "sku_arctic_flame_xxl",
+                "priceId": "price_arctic_flame_xxl",
+                "soldOut": false
+            }
+        },
+        "fallbackLink": "https://buy.stripe.com/test_arctic_flame_hoodie"
+    },
+    {
+        "id": "prod_hoodie_004",
+        "category": "hoodies",
+        "name": "CRIMSON GHOST HOODIE",
+        "price": 59,
+        "image": "images/white_hoodie_red_2.png",
+        "fit": "Classic drop shoulder - Premium cotton blend",
+        "description": "Stylish people clothes with attention to detail",
+        "sizes": {
+            "S": {
+                "skuId": "sku_crimson_ghost_s",
+                "priceId": "price_crimson_ghost_s",
+                "soldOut": false
+            },
+            "M": {
+                "skuId": "sku_crimson_ghost_m",
+                "priceId": "price_crimson_ghost_m",
+                "soldOut": false
+            },
+            "L": {
+                "skuId": "sku_crimson_ghost_l",
+                "priceId": "price_crimson_ghost_l",
+                "soldOut": false
+            },
+            "XL": {
+                "skuId": "sku_crimson_ghost_xl",
+                "priceId": "price_crimson_ghost_xl",
+                "soldOut": false
+            },
+            "XXL": {
+                "skuId": "sku_crimson_ghost_xxl",
+                "priceId": "price_crimson_ghost_xxl",
+                "soldOut": false
+            }
+        },
+        "fallbackLink": "https://buy.stripe.com/test_crimson_ghost_hoodie"
+    },
+    {
+        "id": "prod_hoodie_005",
+        "category": "hoodies",
+        "name": "RUBY CLOUD HOODIE",
+        "price": 52,
+        "image": "images/white_hoodie_red_3.png",
+        "fit": "Comfort fit - Lightweight breathable fabric",
+        "description": "Versatile people clothes for active lifestyles",
+        "sizes": {
+            "S": {
+                "skuId": "sku_ruby_cloud_s",
+                "priceId": "price_ruby_cloud_s",
+                "soldOut": false
+            },
+            "M": {
+                "skuId": "sku_ruby_cloud_m",
+                "priceId": "price_ruby_cloud_m",
+                "soldOut": false
+            },
+            "L": {
+                "skuId": "sku_ruby_cloud_l",
+                "priceId": "price_ruby_cloud_l",
+                "soldOut": false
+            },
+            "XL": {
+                "skuId": "sku_ruby_cloud_xl",
+                "priceId": "price_ruby_cloud_xl",
+                "soldOut": false
+            },
+            "XXL": {
+                "skuId": "sku_ruby_cloud_xxl",
+                "priceId": "price_ruby_cloud_xxl",
+                "soldOut": false
+            }
+        },
+        "fallbackLink": "https://buy.stripe.com/test_ruby_cloud_hoodie"
+    },
+    {
+        "id": "prod_tshirt_001",
+        "category": "t-shirts",
+        "name": "CLASSIC MONKEY TEE",
+        "price": 28,
+        "image": "images/tshirt_classic_monkey.png",
+        "fit": "Regular fit - 100% organic cotton",
+        "description": "Essential people clothes with signature branding",
+        "sizes": {
+            "S": {
+                "skuId": "sku_classic_monkey_tee_s",
+                "priceId": "price_classic_monkey_tee_s",
+                "soldOut": false
+            },
+            "M": {
+                "skuId": "sku_classic_monkey_tee_m",
+                "priceId": "price_classic_monkey_tee_m",
+                "soldOut": false
+            },
+            "L": {
+                "skuId": "sku_classic_monkey_tee_l",
+                "priceId": "price_classic_monkey_tee_l",
+                "soldOut": false
+            },
+            "XL": {
+                "skuId": "sku_classic_monkey_tee_xl",
+                "priceId": "price_classic_monkey_tee_xl",
+                "soldOut": false
+            },
+            "XXL": {
+                "skuId": "sku_classic_monkey_tee_xxl",
+                "priceId": "price_classic_monkey_tee_xxl",
+                "soldOut": false
+            }
+        },
+        "fallbackLink": "https://buy.stripe.com/test_classic_monkey_tee"
+    },
+    {
+        "id": "prod_tshirt_002",
+        "category": "t-shirts",
+        "name": "GRADIENT DREAMS TEE",
+        "price": 32,
+        "image": "images/tshirt_gradient_dreams.png",
+        "fit": "Oversized fit - Premium heavyweight cotton",
+        "description": "Artistic people clothes with unique prints",
+        "sizes": {
+            "S": {
+                "skuId": "sku_gradient_dreams_tee_s",
+                "priceId": "price_gradient_dreams_tee_s",
+                "soldOut": false
+            },
+            "M": {
+                "skuId": "sku_gradient_dreams_tee_m",
+                "priceId": "price_gradient_dreams_tee_m",
+                "soldOut": false
+            },
+            "L": {
+                "skuId": "sku_gradient_dreams_tee_l",
+                "priceId": "price_gradient_dreams_tee_l",
+                "soldOut": false
+            },
+            "XL": {
+                "skuId": "sku_gradient_dreams_tee_xl",
+                "priceId": "price_gradient_dreams_tee_xl",
+                "soldOut": false
+            },
+            "XXL": {
+                "skuId": "sku_gradient_dreams_tee_xxl",
+                "priceId": "price_gradient_dreams_tee_xxl",
+                "soldOut": false
+            }
+        },
+        "fallbackLink": "https://buy.stripe.com/test_gradient_dreams_tee"
+    },
+    {
+        "id": "prod_tshirt_003",
+        "category": "t-shirts",
+        "name": "MINIMAL LOGO TEE",
+        "price": 25,
+        "image": "images/tshirt_minimal_logo.png",
+        "fit": "Slim fit - Soft cotton blend",
+        "description": "Clean, minimalist people clothes",
+        "sizes": {
+            "S": {
+                "skuId": "sku_minimal_logo_tee_s",
+                "priceId": "price_minimal_logo_tee_s",
+                "soldOut": false
+            },
+            "M": {
+                "skuId": "sku_minimal_logo_tee_m",
+                "priceId": "price_minimal_logo_tee_m",
+                "soldOut": false
+            },
+            "L": {
+                "skuId": "sku_minimal_logo_tee_l",
+                "priceId": "price_minimal_logo_tee_l",
+                "soldOut": false
+            },
+            "XL": {
+                "skuId": "sku_minimal_logo_tee_xl",
+                "priceId": "price_minimal_logo_tee_xl",
+                "soldOut": false
+            },
+            "XXL": {
+                "skuId": "sku_minimal_logo_tee_xxl",
+                "priceId": "price_minimal_logo_tee_xxl",
+                "soldOut": false
+            }
+        },
+        "fallbackLink": "https://buy.stripe.com/test_minimal_logo_tee"
+    },
+    {
+        "id": "prod_sticker_001",
+        "category": "stickers",
+        "name": "FANCY MONKEY LOGO STICKER",
+        "price": 3,
+        "image": "images/sticker_logo.png",
+        "description": "Waterproof vinyl sticker - 3 inch",
+        "sizes": {
+            "ONE_SIZE": {
+                "skuId": "sku_logo_sticker",
+                "priceId": "price_logo_sticker",
+                "soldOut": false
+            }
+        },
+        "fallbackLink": "https://buy.stripe.com/test_logo_sticker"
+    },
+    {
+        "id": "prod_sticker_002",
+        "category": "stickers",
+        "name": "HOLOGRAPHIC PACK (5 STICKERS)",
+        "price": 12,
+        "image": "images/sticker_holo_pack.png",
+        "description": "Premium holographic sticker collection",
+        "sizes": {
+            "ONE_SIZE": {
+                "skuId": "sku_holo_sticker_pack",
+                "priceId": "price_holo_sticker_pack",
+                "soldOut": false
+            }
+        },
+        "fallbackLink": "https://buy.stripe.com/test_holo_sticker_pack"
+    },
+    {
+        "id": "prod_sticker_003",
+        "category": "stickers",
+        "name": "MINI STICKER SET (10 PACK)",
+        "price": 8,
+        "image": "images/sticker_mini_set.png",
+        "description": "Assorted mini stickers - 1-2 inches each",
+        "sizes": {
+            "ONE_SIZE": {
+                "skuId": "sku_mini_sticker_set",
+                "priceId": "price_mini_sticker_set",
+                "soldOut": false
+            }
+        },
+        "fallbackLink": "https://buy.stripe.com/test_mini_sticker_set"
+    },
+    {
+        "id": "prod_hanging_001",
+        "category": "hangings",
+        "name": "CANVAS WALL ART - MONKEY DREAMS",
+        "price": 45,
+        "image": "images/hanging_canvas_dreams.png",
+        "description": "Premium canvas print - 18x24 inches",
+        "sizes": {
+            "18x24": {
+                "skuId": "sku_canvas_dreams_18x24",
+                "priceId": "price_canvas_dreams_18x24",
+                "soldOut": false
+            },
+            "24x36": {
+                "skuId": "sku_canvas_dreams_24x36",
+                "priceId": "price_canvas_dreams_24x36",
+                "soldOut": false
+            }
+        },
+        "fallbackLink": "https://buy.stripe.com/test_canvas_dreams"
+    },
+    {
+        "id": "prod_hanging_002",
+        "category": "hangings",
+        "name": "TAPESTRY - FANCY VIBES",
+        "price": 38,
+        "image": "images/hanging_tapestry_vibes.png",
+        "description": "Soft polyester tapestry - 4x5 feet",
+        "sizes": {
+            "4x5ft": {
+                "skuId": "sku_tapestry_vibes_4x5",
+                "priceId": "price_tapestry_vibes_4x5",
+                "soldOut": false
+            },
+            "5x7ft": {
+                "skuId": "sku_tapestry_vibes_5x7",
+                "priceId": "price_tapestry_vibes_5x7",
+                "soldOut": false
+            }
+        },
+        "fallbackLink": "https://buy.stripe.com/test_tapestry_vibes"
+    },
+    {
+        "id": "prod_hanging_003",
+        "category": "hangings",
+        "name": "METAL POSTER - GEOMETRIC MONKEY",
+        "price": 55,
+        "image": "images/hanging_metal_geometric.png",
+        "description": "Aluminum print with floating mount - 16x20 inches",
+        "sizes": {
+            "16x20": {
+                "skuId": "sku_metal_geometric_16x20",
+                "priceId": "price_metal_geometric_16x20",
+                "soldOut": false
+            }
+        },
+        "fallbackLink": "https://buy.stripe.com/test_metal_geometric"
+    },
+    {
+        "id": "prod_notebook_001",
+        "category": "notebooks",
+        "name": "HARDCOVER JOURNAL - BLACK EDITION",
+        "price": 18,
+        "image": "images/notebook_black_hardcover.png",
+        "description": "Premium hardcover notebook - 200 pages, dotted",
+        "sizes": {
+            "A5": {
+                "skuId": "sku_journal_black_a5",
+                "priceId": "price_journal_black_a5",
+                "soldOut": false
+            }
+        },
+        "fallbackLink": "https://buy.stripe.com/test_journal_black"
+    },
+    {
+        "id": "prod_notebook_002",
+        "category": "notebooks",
+        "name": "SPIRAL SKETCHBOOK - ARTIST SERIES",
+        "price": 22,
+        "image": "images/notebook_spiral_artist.png",
+        "description": "Heavy-weight paper sketchbook - 120 pages",
+        "sizes": {
+            "A4": {
+                "skuId": "sku_sketchbook_artist_a4",
+                "priceId": "price_sketchbook_artist_a4",
+                "soldOut": false
+            }
+        },
+        "fallbackLink": "https://buy.stripe.com/test_sketchbook_artist"
+    },
+    {
+        "id": "prod_notebook_003",
+        "category": "notebooks",
+        "name": "POCKET NOTEBOOK SET (3 PACK)",
+        "price": 15,
+        "image": "images/notebook_pocket_set.png",
+        "description": "Set of 3 pocket notebooks - lined, blank, and grid",
+        "sizes": {
+            "POCKET": {
+                "skuId": "sku_pocket_notebook_set",
+                "priceId": "price_pocket_notebook_set",
+                "soldOut": false
+            }
+        },
+        "fallbackLink": "https://buy.stripe.com/test_pocket_notebook_set"
+    }
+]

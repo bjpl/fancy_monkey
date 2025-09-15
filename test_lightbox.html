@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lightbox Test - Fancy Monkey</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .test-item {
+            background: white;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .test-item img:hover {
+            transform: scale(1.05);
+        }
+        .test-item h3 {
+            margin: 10px 0 5px;
+            font-size: 14px;
+        }
+        .status {
+            padding: 10px;
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            margin: 20px auto;
+            max-width: 1000px;
+        }
+        .test-button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background: #000;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 Lightbox Feature Test</h1>
+    
+    <div class="status">
+        ✅ <strong>Lightbox Features Implemented:</strong>
+        <ul>
+            <li>Click any product image to open in fullscreen lightbox</li>
+            <li>Navigate between products with arrow buttons or keyboard (← →)</li>
+            <li>Close with X button, Escape key, or clicking outside the image</li>
+            <li>Product name and price shown in caption</li>
+            <li>Smooth fade-in/scale animations</li>
+            <li>Mobile responsive design</li>
+        </ul>
+    </div>
+
+    <div class="test-grid" id="testGrid"></div>
+
+    <button class="test-button" onclick="window.location.href='index.html'">View Live Site →</button>
+
+    <script>
+        async function loadTestImages() {
+            try {
+                const response = await fetch('products.json');
+                const products = await response.json();
+                
+                const grid = document.getElementById('testGrid');
+                products.forEach(product => {
+                    const item = document.createElement('div');
+                    item.className = 'test-item';
+                    item.innerHTML = `
+                        <img src="${product.image}" alt="${product.name}" onclick="alert('Click functionality works! In the live site, this opens the lightbox.')">
+                        <h3>${product.name}</h3>
+                        <p>$${product.price}</p>
+                    `;
+                    grid.appendChild(item);
+                });
+            } catch (error) {
+                console.error('Error loading test:', error);
+            }
+        }
+        
+        loadTestImages();
+    </script>
+</body>
+</html>

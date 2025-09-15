@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Preview - Fancy Monkey</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        .product {
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 4px;
+        }
+        .product img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            background: #f9f9f9;
+            border: 1px solid #eee;
+        }
+        .product-info {
+            margin-top: 15px;
+        }
+        .product-name {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .product-price {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        .product-fit {
+            font-size: 14px;
+            color: #666;
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+        .product-id {
+            font-size: 12px;
+            color: #999;
+        }
+        .sizes {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+        .size {
+            padding: 5px 10px;
+            border: 1px solid #333;
+            font-size: 12px;
+        }
+        .highlight {
+            background: #fffacd;
+            padding: 2px 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Fancy Monkey - Product Preview</h1>
+        <div id="products" class="products"></div>
+    </div>
+
+    <script>
+        async function loadProducts() {
+            try {
+                const response = await fetch('products.json');
+                const products = await response.json();
+                
+                const container = document.getElementById('products');
+                
+                // Focus on the new products (all 5 hoodies)
+                const newProducts = products.filter(p => 
+                    p.id === 'prod_005' || p.id === 'prod_006' || 
+                    p.id === 'prod_007' || p.id === 'prod_008' || p.id === 'prod_009'
+                );
+                
+                newProducts.forEach(product => {
+                    const productEl = document.createElement('div');
+                    productEl.className = 'product';
+                    productEl.innerHTML = `
+                        <img src="${product.image}" alt="${product.name}" onerror="this.style.background='#ff000020'; this.alt='Image not found: ${product.image}'">
+                        <div class="product-info">
+                            <div class="product-name"><span class="highlight">NEW!</span> ${product.name}</div>
+                            <div class="product-price">$${product.price} USD</div>
+                            <div class="product-fit">${product.fit}</div>
+                            <div class="product-id">Product ID: ${product.id}</div>
+                            <div class="sizes">
+                                ${Object.keys(product.sizes).map(size => 
+                                    `<span class="size">${size}</span>`
+                                ).join('')}
+                            </div>
+                        </div>
+                    `;
+                    container.appendChild(productEl);
+                });
+                
+                // Also show existing products for comparison
+                const existingProducts = products.filter(p => p.id !== 'prod_005' && p.id !== 'prod_006');
+                
+                const separator = document.createElement('h2');
+                separator.textContent = 'Existing Products';
+                separator.style.gridColumn = '1 / -1';
+                separator.style.marginTop = '30px';
+                container.appendChild(separator);
+                
+                existingProducts.forEach(product => {
+                    const productEl = document.createElement('div');
+                    productEl.className = 'product';
+                    productEl.innerHTML = `
+                        <img src="${product.image}" alt="${product.name}" onerror="this.style.background='#cccccc'; this.alt='Image placeholder for: ${product.name}'">
+                        <div class="product-info">
+                            <div class="product-name">${product.name}</div>
+                            <div class="product-price">$${product.price} USD</div>
+                            <div class="product-fit">${product.fit}</div>
+                            <div class="product-id">Product ID: ${product.id}</div>
+                            <div class="sizes">
+                                ${Object.keys(product.sizes).map(size => 
+                                    `<span class="size">${size}</span>`
+                                ).join('')}
+                            </div>
+                        </div>
+                    `;
+                    container.appendChild(productEl);
+                });
+                
+            } catch (error) {
+                console.error('Error loading products:', error);
+                document.getElementById('products').innerHTML = 
+                    '<div style="text-align: center; color: red;">Error loading products. Check console for details.</div>';
+            }
+        }
+        
+        loadProducts();
+    </script>
+</body>
+</html>
