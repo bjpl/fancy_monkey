@@ -1,61 +1,8 @@
-# Claude Code Configuration - Fancy Monkey E-Commerce Project
+# Agent Operating Instructions - Universal Directives
 
-**🔍 Auto-Loaded Context:** This file is automatically read by Claude Code at session start.
+**Purpose:** This file contains universal agent operating directives applicable to ANY project. These directives are embedded in CLAUDE.md for auto-loading but maintained here as a reference for documentation and reuse across projects.
 
-**📚 Extended Documentation:**
-- **AGENT_DIRECTIVES.md** - Reference copy of universal directives (for documentation/reuse)
-- **FANCY_MONKEY_PRACTICES.md** - Detailed project-specific implementation guide
-- Both available for human reference; core directives below ensure auto-loading
-
----
-
-## 📌 Project Overview
-
-### What We're Building
-Fancy Monkey is a delightful e-commerce platform for people clothes with a playful monkey theme. Built with vanilla HTML/CSS/JavaScript for maximum performance and simplicity, integrated with Stripe for secure payments.
-
-### Tech Stack
-- **Frontend:** HTML5, CSS3, Vanilla JavaScript (ES6+)
-- **Backend:** Vercel Serverless Functions
-- **Payment:** Stripe Checkout API
-- **Hosting:** GitHub Pages (frontend) + Vercel (API)
-- **Version Control:** Git/GitHub
-
-### Key Features
-- Product catalog with category filtering
-- Shopping cart with Stripe checkout
-- Comprehensive error handling and fallback systems
-- Responsive design with accessibility features
-- On-brand monkey-themed UX
-
-### Project Status
-- **Version:** 1.0.0
-- **Status:** Production Ready
-- **Last Updated:** 2025-10-07
-
----
-
-## 📁 File Structure
-
-```
-fancy_monkey/
-├── index.html              # Main store page
-├── products.json           # Product catalog
-├── checkout-fallback.html  # Fallback checkout
-├── assets/                 # Brand assets (logos, cursors, mascots)
-├── images/                 # Product photography
-├── daily_reports/          # Development reports
-├── docs/                   # Documentation
-├── fancymonkey-checkout/   # Serverless API
-│   ├── api/checkout.js     # Stripe integration
-│   ├── package.json
-│   └── vercel.json
-├── CLAUDE.md               # This file (auto-loaded)
-├── AGENT_DIRECTIVES.md     # Universal directives reference
-└── FANCY_MONKEY_PRACTICES.md  # Detailed implementation guide
-```
-
-**⚠️ CRITICAL:** Never save working files to root folder. Use subdirectories.
+**Note:** Claude Code automatically reads CLAUDE.md, not this file. This is for human reference and copy/paste to other projects.
 
 ---
 
@@ -237,139 +184,19 @@ fancy_monkey/
 
 ---
 
-## 🎯 Project-Specific Implementation
+## Usage Notes
 
-**📖 See FANCY_MONKEY_PRACTICES.md for detailed implementation guides**
+### For New Projects
+Copy the 25 mandatory directives above into your project's CLAUDE.md file to ensure agents follow these standards.
 
-### Brand Guidelines (MANDATORY-19: User Experience)
-- **Tone:** Playful, fun, professional
-- **Visual Theme:** Monkey/banana themed with warm colors
-- **Error Messages:** On-brand ("banana break", "monkey business")
-- **Accessibility:** All playful elements have accessible alternatives
+### For This Project
+These directives are already embedded in `CLAUDE.md` and will be automatically loaded by Claude Code at the start of each session.
 
-### Error Handling (MANDATORY-7: Error Handling)
-1. Never show broken state - Always have fallbacks
-2. On-brand messaging - Keep errors fun but informative
-3. Multiple fallback layers - Primary → Secondary → Manual
-4. User guidance - Always provide next steps
-
-**Example Fallback Chain:**
-- Primary: Stripe checkout → Error detected
-- Secondary: Redirect to fallback checkout page
-- Tertiary: Manual order form with email notification
-- Final: Contact support with order details
-
-### Performance Targets (MANDATORY-14: Performance Awareness)
-- Page load: < 2 seconds
-- First Contentful Paint: < 1 second
-- Bundle size: < 100KB compressed
-- Images: WebP + PNG/JPG fallbacks, lazy loading
-
-### Security (MANDATORY-9: Security & Privacy)
-- All secrets in environment variables (never commit)
-- Server-side price validation via Stripe
-- Input sanitization on all user inputs
-- Principle of least privilege
-
-### Architecture Decisions (MANDATORY-10: Architecture & Design)
-
-**Vanilla JavaScript chosen for:**
-- Fast load times (<2s target)
-- Zero build complexity
-- Direct GitHub Pages deployment
-- Full performance control
-
-**When to reconsider:**
-- Catalog exceeds 1000 products
-- Complex state management needed
-- Team prefers framework structure
+### Customization
+While these directives are universal, you can add project-specific implementations in separate sections of your CLAUDE.md file.
 
 ---
 
-## ⚡ Quick Reference
-
-### Essential Commands
-```bash
-# Development
-npm run build          # Build project
-npm run test           # Run tests
-npm run lint           # Run linter
-
-# Deployment
-git push               # Push to GitHub (auto-deploys frontend)
-vercel deploy --prod   # Deploy serverless API
-
-# Reports
-# Daily reports auto-generated in /daily_reports
-```
-
-### Environment Variables
-```bash
-STRIPE_SECRET_KEY=sk_...      # Never commit! Server-side only
-STRIPE_PUBLIC_KEY=pk_...      # Safe for client-side
-VERCEL_URL=https://...        # Auto-set by Vercel
-```
-
-### File Organization
-- `/assets` - Brand assets (logos, cursors, mascots)
-- `/images` - Product photography
-- `/daily_reports` - Development reports (auto-generated)
-- `/docs` - Documentation
-- `/fancymonkey-checkout` - Serverless API code
-- Never save to root folder
-
-### Pre-Deployment Checklist
-- [ ] All secrets in environment variables
-- [ ] Tests passing
-- [ ] Lighthouse score >90
-- [ ] Mobile responsive verified
-- [ ] Accessibility validated (keyboard nav, screen readers)
-- [ ] Cross-browser tested (Chrome, Firefox, Safari)
-- [ ] Stripe integration tested (test mode)
-- [ ] Fallback systems verified
-- [ ] Performance benchmarks met (<2s page load)
-- [ ] Documentation updated
-
----
-
-## 🔗 Resources & Support
-
-- **Documentation:** `/docs` folder
-- **Daily Reports:** `/daily_reports` folder
-- **Detailed Practices:** `FANCY_MONKEY_PRACTICES.md`
-- **Agent Directives Reference:** `AGENT_DIRECTIVES.md`
-- **Main Repository:** GitHub (fancy_monkey)
-- **API Hosting:** Vercel Dashboard
-- **Payment Processing:** Stripe Dashboard
-
----
-
-## 📝 Notes for Developers
-
-### First Time Setup
-1. Clone repository
-2. Copy `.env.example` to `.env.local` in `/fancymonkey-checkout`
-3. Add Stripe test keys to `.env.local`
-4. Review `FANCY_MONKEY_PRACTICES.md` for detailed guidelines
-5. Check `daily_reports/` for project history
-
-### For Detailed Guidance
-- **Architecture decisions:** See FANCY_MONKEY_PRACTICES.md → Architecture Implementation
-- **Brand guidelines:** See FANCY_MONKEY_PRACTICES.md → Brand Guidelines
-- **Testing strategy:** See FANCY_MONKEY_PRACTICES.md → Testing Strategy
-- **Deployment procedures:** See FANCY_MONKEY_PRACTICES.md → Deployment Procedures
-- **Security practices:** See FANCY_MONKEY_PRACTICES.md → Security Practices
-
-### Development Workflow
-1. Create feature branch from `main`
-2. Make incremental changes with frequent commits
-3. Test thoroughly before committing
-4. Update documentation as you build
-5. Generate daily report at end of day
-6. Merge to `main` when feature complete
-
----
-
-**Last Updated:** 2025-10-07
 **Version:** 1.0.0
-**Status:** Production Ready
+**Last Updated:** 2025-10-07
+**Status:** Production Standard
