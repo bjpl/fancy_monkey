@@ -59,6 +59,51 @@ fancy_monkey/
 
 ---
 
+## 🔄 MANDATORY FILE READING PROTOCOL
+
+**When you need detailed information, you MUST read the appropriate file:**
+
+### Read FANCY_MONKEY_PRACTICES.md when:
+- Implementing architecture decisions (vanilla JS, serverless, etc.)
+- Working with brand guidelines or UX requirements
+- Implementing error handling or fallback systems
+- Optimizing performance or implementing monitoring
+- Setting up security measures or input sanitization
+- Creating tests or deployment procedures
+- Making any architectural or design decisions
+- User asks about "how should I implement X"
+- User asks about "best practices for Y"
+- You need detailed implementation guidance
+
+**Command to read:** Use the Read tool on `FANCY_MONKEY_PRACTICES.md`
+
+### Read AGENT_DIRECTIVES.md when:
+- User asks about universal agent directives
+- Need to copy directives to another project
+- Reviewing complete directive documentation
+- User asks "what are the agent operating instructions"
+
+**Command to read:** Use the Read tool on `AGENT_DIRECTIVES.md`
+
+### Read daily_reports/ when:
+- User asks about project history
+- Need to understand past decisions
+- Reviewing what was accomplished on specific dates
+- User asks "what did we do on [date]"
+
+**Command to read:** Use the Read tool on `daily_reports/YYYY-MM-DD.md`
+
+**⚠️ DO NOT GUESS** - If you need detailed information not in this file, READ the appropriate file first.
+
+**📢 PROTOCOL:** When reading detailed files, announce to the user:
+- "Reading FANCY_MONKEY_PRACTICES.md for detailed [topic] guidance..."
+- "Checking AGENT_DIRECTIVES.md for complete directive documentation..."
+- "Reading daily report for [date] to understand project history..."
+
+This ensures transparency about information sources and confirms you're following the protocol.
+
+---
+
 ════════════════════════════════════════════════════════
     AGENT OPERATING INSTRUCTIONS
     ALL DIRECTIVES ARE MANDATORY - STRICT COMPLIANCE
@@ -239,7 +284,11 @@ fancy_monkey/
 
 ## 🎯 Project-Specific Implementation
 
-**📖 See FANCY_MONKEY_PRACTICES.md for detailed implementation guides**
+**⚠️ IMPORTANT: The summaries below are HIGH-LEVEL ONLY.**
+
+**📖 For detailed implementation guidance, you MUST read FANCY_MONKEY_PRACTICES.md using the Read tool.**
+
+**DO NOT implement features based on these summaries alone. Always read the detailed guide first.**
 
 ### Brand Guidelines (MANDATORY-19: User Experience)
 - **Tone:** Playful, fun, professional
@@ -353,12 +402,14 @@ VERCEL_URL=https://...        # Auto-set by Vercel
 4. Review `FANCY_MONKEY_PRACTICES.md` for detailed guidelines
 5. Check `daily_reports/` for project history
 
-### For Detailed Guidance
-- **Architecture decisions:** See FANCY_MONKEY_PRACTICES.md → Architecture Implementation
-- **Brand guidelines:** See FANCY_MONKEY_PRACTICES.md → Brand Guidelines
-- **Testing strategy:** See FANCY_MONKEY_PRACTICES.md → Testing Strategy
-- **Deployment procedures:** See FANCY_MONKEY_PRACTICES.md → Deployment Procedures
-- **Security practices:** See FANCY_MONKEY_PRACTICES.md → Security Practices
+### For Detailed Guidance (MUST READ FILES)
+- **Architecture decisions:** READ FANCY_MONKEY_PRACTICES.md → Architecture Implementation
+- **Brand guidelines:** READ FANCY_MONKEY_PRACTICES.md → Brand Guidelines
+- **Testing strategy:** READ FANCY_MONKEY_PRACTICES.md → Testing Strategy
+- **Deployment procedures:** READ FANCY_MONKEY_PRACTICES.md → Deployment Procedures
+- **Security practices:** READ FANCY_MONKEY_PRACTICES.md → Security Practices
+
+**Use the Read tool - do not guess or assume. Read the actual file content.**
 
 ### Development Workflow
 1. Create feature branch from `main`
