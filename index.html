@@ -929,6 +929,37 @@
         NEXT DROP: FRIDAY MIDNIGHT EST
     </div>
 
+    <!-- Search Section -->
+    <section class="search-section">
+        <div class="search-container">
+            <div class="search-box">
+                <svg class="search-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="8.5" cy="8.5" r="6.5" stroke="currentColor" stroke-width="2"/>
+                    <path d="M13 13L17 17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                <input
+                    type="text"
+                    id="searchInput"
+                    class="search-input"
+                    placeholder="Search for products, styles, or fits..."
+                    autocomplete="off"
+                    aria-label="Search products"
+                />
+                <button class="search-clear" id="searchClear" style="display: none;" aria-label="Clear search">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 4L4 12M4 4L12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="search-info" id="searchInfo" style="display: none;">
+                <span id="searchCount"></span>
+            </div>
+            <div class="search-history" id="searchHistory" style="display: none;">
+                <!-- Recent searches will appear here -->
+            </div>
+        </div>
+    </section>
+
     <!-- Category Filter Section -->
     <section class="filter-section">
         <div class="filter-container">
@@ -1017,6 +1048,205 @@
             maxRetries: 3,
             retryDelay: 1000 // Base delay for exponential backoff
         };
+
+        // ========== Shopping Cart Persistence Manager ==========
+        class CartPersistenceManager {
+            constructor() {
+                this.storageKey = 'fancymonkey_cart';
+                this.versionKey = 'fancymonkey_cart_version';
+                this.currentVersion = '1.0.0';
+                this.cartTTL = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+                this.isSupported = this.checkLocalStorageSupport();
+            }
+
+            // Check if localStorage is supported and available
+            checkLocalStorageSupport() {
+                try {
+                    const testKey = '__fancymonkey_test__';
+                    localStorage.setItem(testKey, 'test');
+                    localStorage.removeItem(testKey);
+                    return true;
+                } catch (e) {
+                    console.warn('LocalStorage not available:', e);
+                    return false;
+                }
+            }
+
+            // Save cart to localStorage with error handling
+            saveCart(cart) {
+                if (!this.isSupported) {
+                    console.warn('Cart persistence disabled - localStorage not available');
+                    return false;
+                }
+
+                try {
+                    const cartData = {
+                        version: this.currentVersion,
+                        timestamp: Date.now(),
+                        cart: cart,
+                        expiresAt: Date.now() + this.cartTTL
+                    };
+
+                    localStorage.setItem(this.storageKey, JSON.stringify(cartData));
+                    localStorage.setItem(this.versionKey, this.currentVersion);
+
+                    if (ENV.isDevelopment) {
+                        console.log('Cart saved:', cartData);
+                    }
+
+                    return true;
+                } catch (e) {
+                    if (e.name === 'QuotaExceededError') {
+                        console.error('LocalStorage quota exceeded - clearing old data');
+                        this.clearCart();
+                        return false;
+                    } else {
+                        console.error('Failed to save cart:', e);
+                        return false;
+                    }
+                }
+            }
+
+            // Load cart from localStorage
+            loadCart() {
+                if (!this.isSupported) {
+                    return null;
+                }
+
+                try {
+                    const storedData = localStorage.getItem(this.storageKey);
+
+                    if (!storedData) {
+                        return null;
+                    }
+
+                    const cartData = JSON.parse(storedData);
+
+                    // Check version compatibility
+                    if (cartData.version !== this.currentVersion) {
+                        console.warn('Cart version mismatch - migrating data');
+                        return this.migrateCart(cartData);
+                    }
+
+                    // Check if cart has expired
+                    if (Date.now() > cartData.expiresAt) {
+                        console.log('Cart expired - clearing');
+                        this.clearCart();
+                        return null;
+                    }
+
+                    if (ENV.isDevelopment) {
+                        const ageHours = ((Date.now() - cartData.timestamp) / (1000 * 60 * 60)).toFixed(1);
+                        console.log(`Cart restored (${ageHours}h old):`, cartData.cart);
+                    }
+
+                    return cartData.cart;
+                } catch (e) {
+                    console.error('Failed to load cart:', e);
+                    this.clearCart();
+                    return null;
+                }
+            }
+
+            // Clear cart from localStorage
+            clearCart() {
+                if (!this.isSupported) {
+                    return;
+                }
+
+                try {
+                    localStorage.removeItem(this.storageKey);
+                    if (ENV.isDevelopment) {
+                        console.log('Cart cleared from localStorage');
+                    }
+                } catch (e) {
+                    console.error('Failed to clear cart:', e);
+                }
+            }
+
+            // Migrate cart from older versions (future-proofing)
+            migrateCart(oldCartData) {
+                try {
+                    // For now, just update version and preserve data
+                    // In future versions, add migration logic here
+                    const migratedCart = {
+                        version: this.currentVersion,
+                        timestamp: oldCartData.timestamp || Date.now(),
+                        cart: oldCartData.cart || oldCartData, // Handle old format
+                        expiresAt: oldCartData.expiresAt || (Date.now() + this.cartTTL)
+                    };
+
+                    this.saveCart(migratedCart.cart);
+                    return migratedCart.cart;
+                } catch (e) {
+                    console.error('Failed to migrate cart:', e);
+                    this.clearCart();
+                    return null;
+                }
+            }
+
+            // Get cart age in hours
+            getCartAge() {
+                if (!this.isSupported) {
+                    return null;
+                }
+
+                try {
+                    const storedData = localStorage.getItem(this.storageKey);
+                    if (!storedData) {
+                        return null;
+                    }
+
+                    const cartData = JSON.parse(storedData);
+                    const ageMs = Date.now() - cartData.timestamp;
+                    return ageMs / (1000 * 60 * 60); // Convert to hours
+                } catch (e) {
+                    return null;
+                }
+            }
+
+            // Get time until cart expires
+            getTimeUntilExpiry() {
+                if (!this.isSupported) {
+                    return null;
+                }
+
+                try {
+                    const storedData = localStorage.getItem(this.storageKey);
+                    if (!storedData) {
+                        return null;
+                    }
+
+                    const cartData = JSON.parse(storedData);
+                    const timeLeft = cartData.expiresAt - Date.now();
+                    return timeLeft > 0 ? timeLeft : 0;
+                } catch (e) {
+                    return null;
+                }
+            }
+
+            // Check if cart exists and is valid
+            hasValidCart() {
+                if (!this.isSupported) {
+                    return false;
+                }
+
+                try {
+                    const storedData = localStorage.getItem(this.storageKey);
+                    if (!storedData) {
+                        return false;
+                    }
+
+                    const cartData = JSON.parse(storedData);
+                    return Date.now() <= cartData.expiresAt;
+                } catch (e) {
+                    return false;
+                }
+            }
+        }
+
+        // Initialize cart persistence manager
+        const cartPersistence = new CartPersistenceManager();
 
         // Connection State
         const connectionState = {
@@ -1341,6 +1571,7 @@
                 initializeCategories();
                 renderFilterPills();
                 renderProducts();
+                initializeSearch(); // Initialize search functionality
 
                 // Show dev badge if in development
                 uiFeedback.showDevBadge();
@@ -1458,6 +1689,197 @@
             }
         }
 
+        // ========== Product Search Functionality ==========
+        let searchQuery = '';
+        let searchDebounceTimer = null;
+
+        // Search products by name, fit, or category
+        function searchProducts(query) {
+            searchQuery = query.toLowerCase().trim();
+
+            const searchInput = document.getElementById('searchInput');
+            const searchClear = document.getElementById('searchClear');
+            const searchInfo = document.getElementById('searchInfo');
+            const searchCount = document.getElementById('searchCount');
+
+            // Show/hide clear button
+            if (searchClear) {
+                searchClear.style.display = searchQuery ? 'flex' : 'none';
+            }
+
+            // Get all product elements
+            const productElements = document.querySelectorAll('.product');
+            let visibleCount = 0;
+            let matchedProducts = [];
+
+            productElements.forEach((element, index) => {
+                const product = products[index];
+                let matches = false;
+
+                // Check if search query is empty
+                if (!searchQuery) {
+                    // If no search, apply category filter only
+                    matches = activeFilter === 'all' || product.category === activeFilter;
+                } else {
+                    // Search in product name
+                    const nameMatch = product.name.toLowerCase().includes(searchQuery);
+
+                    // Search in fit description
+                    const fitMatch = product.fit && product.fit.toLowerCase().includes(searchQuery);
+
+                    // Search in category
+                    const categoryMatch = product.category.toLowerCase().includes(searchQuery);
+
+                    // Search in price (e.g., "58" or "$58")
+                    const priceMatch = product.price.toString().includes(searchQuery.replace('$', ''));
+
+                    // Combine all matches
+                    matches = nameMatch || fitMatch || categoryMatch || priceMatch;
+
+                    // Also apply category filter if active
+                    if (matches && activeFilter !== 'all') {
+                        matches = product.category === activeFilter;
+                    }
+                }
+
+                if (matches) {
+                    visibleCount++;
+                    matchedProducts.push(product);
+                    // Stagger animation
+                    setTimeout(() => {
+                        element.classList.remove('hidden');
+                        element.classList.add('filtering');
+                    }, visibleCount * 50);
+                } else {
+                    element.classList.add('hidden');
+                    element.classList.remove('filtering');
+                }
+            });
+
+            // Update search info
+            if (searchInfo && searchCount) {
+                if (searchQuery) {
+                    searchCount.textContent = `Found ${visibleCount} ${visibleCount === 1 ? 'item' : 'items'}`;
+                    searchInfo.style.display = 'block';
+                } else {
+                    searchInfo.style.display = 'none';
+                }
+            }
+
+            // Show/hide no results message
+            const container = document.getElementById('products');
+            const noResultsElement = container.querySelector('.no-results');
+
+            if (visibleCount === 0) {
+                if (!noResultsElement) {
+                    const noResults = document.createElement('div');
+                    noResults.className = 'no-results';
+                    noResults.innerHTML = `
+                        <div style="text-align: center; padding: 60px 20px;">
+                            <div style="font-size: 48px; margin-bottom: 20px;">🙈</div>
+                            <h3 style="margin-bottom: 10px; font-size: 24px;">No monkeys found!</h3>
+                            <p style="color: #666; margin-bottom: 20px;">
+                                ${searchQuery
+                                    ? `No products match "${searchQuery}"`
+                                    : 'No products in this category'}
+                            </p>
+                            <button
+                                onclick="clearSearch()"
+                                style="background: #000; color: #fff; border: none; padding: 12px 24px; font-size: 14px; font-weight: 700; letter-spacing: 0.1em; cursor: pointer; transition: all 0.3s ease;"
+                            >
+                                CLEAR SEARCH
+                            </button>
+                        </div>
+                    `;
+                    container.appendChild(noResults);
+                }
+            } else if (noResultsElement) {
+                noResultsElement.remove();
+            }
+
+            // Log search for analytics (development only)
+            if (ENV.isDevelopment && searchQuery) {
+                console.log('Search:', {
+                    query: searchQuery,
+                    results: visibleCount,
+                    matchedProducts: matchedProducts.map(p => p.name)
+                });
+            }
+        }
+
+        // Clear search
+        function clearSearch() {
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput) {
+                searchInput.value = '';
+                searchProducts('');
+                searchInput.focus();
+            }
+        }
+
+        // Handle search input with debouncing (300ms delay)
+        function handleSearchInput(event) {
+            const query = event.target.value;
+
+            // Clear previous timer
+            if (searchDebounceTimer) {
+                clearTimeout(searchDebounceTimer);
+            }
+
+            // Set new timer for debounced search
+            searchDebounceTimer = setTimeout(() => {
+                searchProducts(query);
+            }, 300); // 300ms debounce
+        }
+
+        // Initialize search functionality
+        function initializeSearch() {
+            const searchInput = document.getElementById('searchInput');
+            const searchClear = document.getElementById('searchClear');
+
+            if (searchInput) {
+                // Add input event listener with debouncing
+                searchInput.addEventListener('input', handleSearchInput);
+
+                // Add keyboard shortcuts
+                searchInput.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape') {
+                        clearSearch();
+                    } else if (e.key === 'Enter') {
+                        // Immediately search on Enter (bypass debounce)
+                        if (searchDebounceTimer) {
+                            clearTimeout(searchDebounceTimer);
+                        }
+                        searchProducts(searchInput.value);
+                    }
+                });
+
+                // Focus management
+                searchInput.addEventListener('focus', () => {
+                    searchInput.parentElement.classList.add('focused');
+                });
+
+                searchInput.addEventListener('blur', () => {
+                    searchInput.parentElement.classList.remove('focused');
+                });
+            }
+
+            if (searchClear) {
+                searchClear.addEventListener('click', clearSearch);
+            }
+
+            // Keyboard shortcut: Ctrl/Cmd + K to focus search
+            document.addEventListener('keydown', (e) => {
+                if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                    e.preventDefault();
+                    if (searchInput) {
+                        searchInput.focus();
+                        searchInput.select();
+                    }
+                }
+            });
+        }
+
         // Clear filter
         document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('clearFilter').addEventListener('click', () => {
@@ -1521,18 +1943,23 @@
             document.querySelectorAll('.product img').forEach(img => {
                 img.addEventListener('click', openLightbox);
             });
+
+            // Restore cart after products are rendered
+            setTimeout(() => {
+                restoreCart();
+            }, 100); // Small delay to ensure DOM is fully ready
         }
 
         // Handle size selection
         function selectSize(e) {
             const productId = e.target.dataset.product;
             const size = e.target.dataset.size;
-            
+
             // Clear previous selection
             document.querySelectorAll(`#sizes-${productId} .size-btn`).forEach(btn => {
                 btn.classList.remove('selected');
             });
-            
+
             // Select new size
             e.target.classList.add('selected');
             selectedSizes[productId] = {
@@ -1540,11 +1967,124 @@
                 skuId: e.target.dataset.sku,
                 priceId: e.target.dataset.price
             };
-            
+
+            // Save cart to localStorage
+            cartPersistence.saveCart(selectedSizes);
+
             // Update buy button
             const buyBtn = document.getElementById(`buy-${productId}`);
             buyBtn.disabled = false;
             buyBtn.textContent = `BUY - SIZE ${size}`;
+        }
+
+        // Clear cart functionality
+        function clearCart() {
+            // Clear in-memory cart
+            selectedSizes = {};
+
+            // Clear localStorage
+            cartPersistence.clearCart();
+
+            // Reset all UI elements
+            document.querySelectorAll('.size-btn').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+
+            document.querySelectorAll('.buy-btn').forEach(btn => {
+                btn.disabled = true;
+                btn.textContent = 'SELECT SIZE';
+            });
+
+            // Show monkey-themed feedback
+            const cartClearedInfo = {
+                title: '🍌 Cart Cleared!',
+                message: 'The monkeys cleaned out your banana basket!',
+                severity: 'success'
+            };
+
+            // Show notification at top of products section
+            const productsContainer = document.getElementById('products');
+            if (productsContainer) {
+                const tempDiv = document.createElement('div');
+                tempDiv.style.gridColumn = '1 / -1';
+                uiFeedback.showError(tempDiv, cartClearedInfo);
+                productsContainer.insertBefore(tempDiv, productsContainer.firstChild);
+
+                // Auto-remove after 3 seconds
+                setTimeout(() => {
+                    tempDiv.remove();
+                }, 3000);
+            }
+
+            console.log('Cart cleared successfully');
+        }
+
+        // Restore cart from localStorage
+        function restoreCart() {
+            const savedCart = cartPersistence.loadCart();
+
+            if (!savedCart || Object.keys(savedCart).length === 0) {
+                return false;
+            }
+
+            // Restore selectedSizes
+            selectedSizes = savedCart;
+
+            // Restore UI state for each saved item
+            let restoredCount = 0;
+            Object.entries(savedCart).forEach(([productId, sizeData]) => {
+                // Find and select the size button
+                const sizeBtn = document.querySelector(
+                    `button[data-product="${productId}"][data-size="${sizeData.size}"]`
+                );
+
+                if (sizeBtn && !sizeBtn.classList.contains('sold-out')) {
+                    sizeBtn.classList.add('selected');
+
+                    // Update buy button
+                    const buyBtn = document.getElementById(`buy-${productId}`);
+                    if (buyBtn) {
+                        buyBtn.disabled = false;
+                        buyBtn.textContent = `BUY - SIZE ${sizeData.size}`;
+                    }
+
+                    restoredCount++;
+                }
+            });
+
+            // Show visual feedback if items were restored
+            if (restoredCount > 0) {
+                const cartAge = cartPersistence.getCartAge();
+                const ageText = cartAge < 1 ?
+                    'a few moments ago' :
+                    `${Math.floor(cartAge)} hour${Math.floor(cartAge) !== 1 ? 's' : ''} ago`;
+
+                const restoreInfo = {
+                    title: '🐵 Your Cart is Back!',
+                    message: `We found ${restoredCount} item${restoredCount !== 1 ? 's' : ''} you picked ${ageText}!`,
+                    subtitle: 'Cart saved for 24 hours - grab your bananas before they expire!',
+                    severity: 'info'
+                };
+
+                // Show at top of products
+                const productsContainer = document.getElementById('products');
+                if (productsContainer) {
+                    const tempDiv = document.createElement('div');
+                    tempDiv.style.gridColumn = '1 / -1';
+                    uiFeedback.showError(tempDiv, restoreInfo);
+                    productsContainer.insertBefore(tempDiv, productsContainer.firstChild);
+
+                    // Auto-remove after 8 seconds
+                    setTimeout(() => {
+                        tempDiv.remove();
+                    }, 8000);
+                }
+
+                console.log(`Cart restored: ${restoredCount} items from ${ageText}`);
+                return true;
+            }
+
+            return false;
         }
 
         // ========== Enhanced Checkout Handling ==========
@@ -1614,7 +2154,12 @@
                         throw new Error(data.error);
                     }
                 } else if (data.checkoutUrl) {
-                    // Success - show quick success before redirect
+                    // Success - clear cart and redirect
+                    // Clear the specific item from cart (or entire cart on successful checkout)
+                    delete selectedSizes[productId];
+                    cartPersistence.saveCart(selectedSizes);
+
+                    // Show quick success before redirect
                     const successInfo = {
                         title: '🎉 Banana Success!',
                         message: 'Swinging you to checkout...',
@@ -1759,6 +2304,20 @@
                 } else if (e.key === 'ArrowRight') {
                     navigateLightbox('next');
                 }
+            } else {
+                // Global keyboard shortcuts (when lightbox is not active)
+                // Ctrl+Shift+C or Cmd+Shift+C to clear cart
+                if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'C') {
+                    e.preventDefault();
+                    if (Object.keys(selectedSizes).length > 0) {
+                        const confirmed = confirm(
+                            '🍌 Clear all selected items from your banana basket?'
+                        );
+                        if (confirmed) {
+                            clearCart();
+                        }
+                    }
+                }
             }
         });
 
@@ -1766,6 +2325,23 @@
         document.getElementById('lightbox-image').addEventListener('click', function(e) {
             e.stopPropagation();
         });
+
+        // Expose clearCart function globally for dev/testing
+        window.fancyMonkeyCart = {
+            clear: clearCart,
+            restore: restoreCart,
+            getCart: () => selectedSizes,
+            getAge: () => {
+                const age = cartPersistence.getCartAge();
+                return age ? `${age.toFixed(1)} hours` : 'No cart saved';
+            },
+            getExpiry: () => {
+                const timeLeft = cartPersistence.getTimeUntilExpiry();
+                if (!timeLeft) return 'No cart saved';
+                const hoursLeft = timeLeft / (1000 * 60 * 60);
+                return `${hoursLeft.toFixed(1)} hours remaining`;
+            }
+        };
 
         // Initialize on load
         document.addEventListener('DOMContentLoaded', loadProducts);

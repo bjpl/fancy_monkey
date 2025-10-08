@@ -2,6 +2,12 @@
   "functions": {
     "api/checkout.js": {
       "maxDuration": 10
+    },
+    "api/send-email.js": {
+      "maxDuration": 10
+    },
+    "api/stripe-webhook.js": {
+      "maxDuration": 10
     }
   },
   "headers": [
@@ -24,6 +30,9 @@
     }
   ],
   "env": {
-    "STRIPE_SECRET_KEY": "@stripe_secret_key"
+    "STRIPE_SECRET_KEY": "@stripe_secret_key",
+    "STRIPE_WEBHOOK_SECRET": "@stripe_webhook_secret",
+    "RESEND_API_KEY": "@resend_api_key",
+    "FROM_EMAIL": "@from_email"
   }
 }

@@ -11,30 +11,47 @@
             "S": {
                 "skuId": "sku_midnight_emerald_s",
                 "priceId": "price_midnight_emerald_s",
-                "soldOut": false
+                "soldOut": false,
+                "stock": 15,
+                "reserved": 0,
+                "lowStockThreshold": 5
             },
             "M": {
                 "skuId": "sku_midnight_emerald_m",
                 "priceId": "price_midnight_emerald_m",
-                "soldOut": false
+                "soldOut": false,
+                "stock": 20,
+                "reserved": 0,
+                "lowStockThreshold": 5
             },
             "L": {
                 "skuId": "sku_midnight_emerald_l",
                 "priceId": "price_midnight_emerald_l",
-                "soldOut": false
+                "soldOut": false,
+                "stock": 25,
+                "reserved": 0,
+                "lowStockThreshold": 5
             },
             "XL": {
                 "skuId": "sku_midnight_emerald_xl",
                 "priceId": "price_midnight_emerald_xl",
-                "soldOut": false
+                "soldOut": false,
+                "stock": 18,
+                "reserved": 0,
+                "lowStockThreshold": 5
             },
             "XXL": {
                 "skuId": "sku_midnight_emerald_xxl",
                 "priceId": "price_midnight_emerald_xxl",
-                "soldOut": false
+                "soldOut": false,
+                "stock": 3,
+                "reserved": 0,
+                "lowStockThreshold": 5
             }
         },
-        "fallbackLink": "/checkout-fallback.html?product=MIDNIGHT%20EMERALD%20HOODIE"
+        "fallbackLink": "/checkout-fallback.html?product=MIDNIGHT%20EMERALD%20HOODIE",
+        "restockDate": null,
+        "lastUpdated": "2025-10-07T00:00:00.000Z"
     },
     {
         "id": "prod_hoodie_002",
@@ -48,30 +65,48 @@
             "S": {
                 "skuId": "sku_shadow_viper_s",
                 "priceId": "price_shadow_viper_s",
-                "soldOut": false
+                "soldOut": false,
+                "stock": 8,
+                "reserved": 0,
+                "lowStockThreshold": 5
             },
             "M": {
                 "skuId": "sku_shadow_viper_m",
                 "priceId": "price_shadow_viper_m",
-                "soldOut": false
+                "soldOut": false,
+                "stock": 12,
+                "reserved": 0,
+                "lowStockThreshold": 5
             },
             "L": {
                 "skuId": "sku_shadow_viper_l",
                 "priceId": "price_shadow_viper_l",
-                "soldOut": false
+                "soldOut": false,
+                "stock": 2,
+                "reserved": 0,
+                "lowStockThreshold": 5
             },
             "XL": {
                 "skuId": "sku_shadow_viper_xl",
                 "priceId": "price_shadow_viper_xl",
-                "soldOut": false
+                "soldOut": false,
+                "stock": 10,
+                "reserved": 0,
+                "lowStockThreshold": 5
             },
             "XXL": {
                 "skuId": "sku_shadow_viper_xxl",
                 "priceId": "price_shadow_viper_xxl",
-                "soldOut": false
+                "soldOut": false,
+                "stock": 0,
+                "reserved": 0,
+                "lowStockThreshold": 5,
+                "restockDate": "2025-10-15T00:00:00.000Z"
             }
         },
-        "fallbackLink": "/checkout-fallback.html?product=SHADOW%20VIPER%20HOODIE"
+        "fallbackLink": "/checkout-fallback.html?product=SHADOW%20VIPER%20HOODIE",
+        "restockDate": null,
+        "lastUpdated": "2025-10-07T00:00:00.000Z"
     },
     {
         "id": "prod_hoodie_003",
@@ -85,30 +120,47 @@
             "S": {
                 "skuId": "sku_arctic_flame_s",
                 "priceId": "price_arctic_flame_s",
-                "soldOut": false
+                "soldOut": false,
+                "stock": 30,
+                "reserved": 0,
+                "lowStockThreshold": 5
             },
             "M": {
                 "skuId": "sku_arctic_flame_m",
                 "priceId": "price_arctic_flame_m",
-                "soldOut": false
+                "soldOut": false,
+                "stock": 35,
+                "reserved": 0,
+                "lowStockThreshold": 5
             },
             "L": {
                 "skuId": "sku_arctic_flame_l",
                 "priceId": "price_arctic_flame_l",
-                "soldOut": false
+                "soldOut": false,
+                "stock": 28,
+                "reserved": 0,
+                "lowStockThreshold": 5
             },
             "XL": {
                 "skuId": "sku_arctic_flame_xl",
                 "priceId": "price_arctic_flame_xl",
-                "soldOut": false
+                "soldOut": false,
+                "stock": 4,
+                "reserved": 0,
+                "lowStockThreshold": 5
             },
             "XXL": {
                 "skuId": "sku_arctic_flame_xxl",
                 "priceId": "price_arctic_flame_xxl",
-                "soldOut": false
+                "soldOut": false,
+                "stock": 22,
+                "reserved": 0,
+                "lowStockThreshold": 5
             }
         },
-        "fallbackLink": "/checkout-fallback.html?product=ARCTIC%20FLAME%20HOODIE"
+        "fallbackLink": "/checkout-fallback.html?product=ARCTIC%20FLAME%20HOODIE",
+        "restockDate": null,
+        "lastUpdated": "2025-10-07T00:00:00.000Z"
     },
     {
         "id": "prod_hoodie_004",
@@ -122,30 +174,47 @@
             "S": {
                 "skuId": "sku_crimson_ghost_s",
                 "priceId": "price_crimson_ghost_s",
-                "soldOut": false
+                "soldOut": false,
+                "stock": 16,
+                "reserved": 0,
+                "lowStockThreshold": 5
             },
             "M": {
                 "skuId": "sku_crimson_ghost_m",
                 "priceId": "price_crimson_ghost_m",
-                "soldOut": false
+                "soldOut": false,
+                "stock": 19,
+                "reserved": 0,
+                "lowStockThreshold": 5
             },
             "L": {
                 "skuId": "sku_crimson_ghost_l",
                 "priceId": "price_crimson_ghost_l",
-                "soldOut": false
+                "soldOut": false,
+                "stock": 24,
+                "reserved": 0,
+                "lowStockThreshold": 5
             },
             "XL": {
                 "skuId": "sku_crimson_ghost_xl",
                 "priceId": "price_crimson_ghost_xl",
-                "soldOut": false
+                "soldOut": false,
+                "stock": 14,
+                "reserved": 0,
+                "lowStockThreshold": 5
             },
             "XXL": {
                 "skuId": "sku_crimson_ghost_xxl",
                 "priceId": "price_crimson_ghost_xxl",
-                "soldOut": false
+                "soldOut": false,
+                "stock": 1,
+                "reserved": 0,
+                "lowStockThreshold": 5
             }
         },
-        "fallbackLink": "/checkout-fallback.html?product=CRIMSON%20GHOST%20HOODIE"
+        "fallbackLink": "/checkout-fallback.html?product=CRIMSON%20GHOST%20HOODIE",
+        "restockDate": null,
+        "lastUpdated": "2025-10-07T00:00:00.000Z"
     },
     {
         "id": "prod_hoodie_005",
@@ -159,30 +228,47 @@
             "S": {
                 "skuId": "sku_ruby_cloud_s",
                 "priceId": "price_ruby_cloud_s",
-                "soldOut": false
+                "soldOut": false,
+                "stock": 40,
+                "reserved": 0,
+                "lowStockThreshold": 5
             },
             "M": {
                 "skuId": "sku_ruby_cloud_m",
                 "priceId": "price_ruby_cloud_m",
-                "soldOut": false
+                "soldOut": false,
+                "stock": 45,
+                "reserved": 0,
+                "lowStockThreshold": 5
             },
             "L": {
                 "skuId": "sku_ruby_cloud_l",
                 "priceId": "price_ruby_cloud_l",
-                "soldOut": false
+                "soldOut": false,
+                "stock": 38,
+                "reserved": 0,
+                "lowStockThreshold": 5
             },
             "XL": {
                 "skuId": "sku_ruby_cloud_xl",
                 "priceId": "price_ruby_cloud_xl",
-                "soldOut": false
+                "soldOut": false,
+                "stock": 32,
+                "reserved": 0,
+                "lowStockThreshold": 5
             },
             "XXL": {
                 "skuId": "sku_ruby_cloud_xxl",
                 "priceId": "price_ruby_cloud_xxl",
-                "soldOut": false
+                "soldOut": false,
+                "stock": 28,
+                "reserved": 0,
+                "lowStockThreshold": 5
             }
         },
-        "fallbackLink": "/checkout-fallback.html?product=RUBY%20CLOUD%20HOODIE"
+        "fallbackLink": "/checkout-fallback.html?product=RUBY%20CLOUD%20HOODIE",
+        "restockDate": null,
+        "lastUpdated": "2025-10-07T00:00:00.000Z"
     },
     {
         "id": "prod_tshirt_001",
@@ -196,30 +282,47 @@
             "S": {
                 "skuId": "sku_classic_monkey_tee_s",
                 "priceId": "price_classic_monkey_tee_s",
-                "soldOut": false
+                "soldOut": false,
+                "stock": 50,
+                "reserved": 0,
+                "lowStockThreshold": 10
             },
             "M": {
                 "skuId": "sku_classic_monkey_tee_m",
                 "priceId": "price_classic_monkey_tee_m",
-                "soldOut": false
+                "soldOut": false,
+                "stock": 60,
+                "reserved": 0,
+                "lowStockThreshold": 10
             },
             "L": {
                 "skuId": "sku_classic_monkey_tee_l",
                 "priceId": "price_classic_monkey_tee_l",
-                "soldOut": false
+                "soldOut": false,
+                "stock": 55,
+                "reserved": 0,
+                "lowStockThreshold": 10
             },
             "XL": {
                 "skuId": "sku_classic_monkey_tee_xl",
                 "priceId": "price_classic_monkey_tee_xl",
-                "soldOut": false
+                "soldOut": false,
+                "stock": 48,
+                "reserved": 0,
+                "lowStockThreshold": 10
             },
             "XXL": {
                 "skuId": "sku_classic_monkey_tee_xxl",
                 "priceId": "price_classic_monkey_tee_xxl",
-                "soldOut": false
+                "soldOut": false,
+                "stock": 42,
+                "reserved": 0,
+                "lowStockThreshold": 10
             }
         },
-        "fallbackLink": "/checkout-fallback.html?product=CLASSIC%20MONKEY%20TEE"
+        "fallbackLink": "/checkout-fallback.html?product=CLASSIC%20MONKEY%20TEE",
+        "restockDate": null,
+        "lastUpdated": "2025-10-07T00:00:00.000Z"
     },
     {
         "id": "prod_tshirt_002",
@@ -233,30 +336,47 @@
             "S": {
                 "skuId": "sku_gradient_dreams_tee_s",
                 "priceId": "price_gradient_dreams_tee_s",
-                "soldOut": false
+                "soldOut": false,
+                "stock": 8,
+                "reserved": 0,
+                "lowStockThreshold": 10
             },
             "M": {
                 "skuId": "sku_gradient_dreams_tee_m",
                 "priceId": "price_gradient_dreams_tee_m",
-                "soldOut": false
+                "soldOut": false,
+                "stock": 12,
+                "reserved": 0,
+                "lowStockThreshold": 10
             },
             "L": {
                 "skuId": "sku_gradient_dreams_tee_l",
                 "priceId": "price_gradient_dreams_tee_l",
-                "soldOut": false
+                "soldOut": false,
+                "stock": 9,
+                "reserved": 0,
+                "lowStockThreshold": 10
             },
             "XL": {
                 "skuId": "sku_gradient_dreams_tee_xl",
                 "priceId": "price_gradient_dreams_tee_xl",
-                "soldOut": false
+                "soldOut": false,
+                "stock": 6,
+                "reserved": 0,
+                "lowStockThreshold": 10
             },
             "XXL": {
                 "skuId": "sku_gradient_dreams_tee_xxl",
                 "priceId": "price_gradient_dreams_tee_xxl",
-                "soldOut": false
+                "soldOut": false,
+                "stock": 4,
+                "reserved": 0,
+                "lowStockThreshold": 10
             }
         },
-        "fallbackLink": "/checkout-fallback.html?product=GRADIENT%20DREAMS%20TEE"
+        "fallbackLink": "/checkout-fallback.html?product=GRADIENT%20DREAMS%20TEE",
+        "restockDate": null,
+        "lastUpdated": "2025-10-07T00:00:00.000Z"
     },
     {
         "id": "prod_tshirt_003",
@@ -270,30 +390,47 @@
             "S": {
                 "skuId": "sku_minimal_logo_tee_s",
                 "priceId": "price_minimal_logo_tee_s",
-                "soldOut": false
+                "soldOut": false,
+                "stock": 100,
+                "reserved": 0,
+                "lowStockThreshold": 10
             },
             "M": {
                 "skuId": "sku_minimal_logo_tee_m",
                 "priceId": "price_minimal_logo_tee_m",
-                "soldOut": false
+                "soldOut": false,
+                "stock": 120,
+                "reserved": 0,
+                "lowStockThreshold": 10
             },
             "L": {
                 "skuId": "sku_minimal_logo_tee_l",
                 "priceId": "price_minimal_logo_tee_l",
-                "soldOut": false
+                "soldOut": false,
+                "stock": 110,
+                "reserved": 0,
+                "lowStockThreshold": 10
             },
             "XL": {
                 "skuId": "sku_minimal_logo_tee_xl",
                 "priceId": "price_minimal_logo_tee_xl",
-                "soldOut": false
+                "soldOut": false,
+                "stock": 95,
+                "reserved": 0,
+                "lowStockThreshold": 10
             },
             "XXL": {
                 "skuId": "sku_minimal_logo_tee_xxl",
                 "priceId": "price_minimal_logo_tee_xxl",
-                "soldOut": false
+                "soldOut": false,
+                "stock": 85,
+                "reserved": 0,
+                "lowStockThreshold": 10
             }
         },
-        "fallbackLink": "/checkout-fallback.html?product=MINIMAL%20LOGO%20TEE"
+        "fallbackLink": "/checkout-fallback.html?product=MINIMAL%20LOGO%20TEE",
+        "restockDate": null,
+        "lastUpdated": "2025-10-07T00:00:00.000Z"
     },
     {
         "id": "prod_sticker_001",
@@ -306,10 +443,15 @@
             "ONE_SIZE": {
                 "skuId": "sku_logo_sticker",
                 "priceId": "price_logo_sticker",
-                "soldOut": false
+                "soldOut": false,
+                "stock": 500,
+                "reserved": 0,
+                "lowStockThreshold": 50
             }
         },
-        "fallbackLink": "/checkout-fallback.html?product=FANCY%20MONKEY%20LOGO%20STICKER"
+        "fallbackLink": "/checkout-fallback.html?product=FANCY%20MONKEY%20LOGO%20STICKER",
+        "restockDate": null,
+        "lastUpdated": "2025-10-07T00:00:00.000Z"
     },
     {
         "id": "prod_sticker_002",
@@ -322,10 +464,15 @@
             "ONE_SIZE": {
                 "skuId": "sku_holo_sticker_pack",
                 "priceId": "price_holo_sticker_pack",
-                "soldOut": false
+                "soldOut": false,
+                "stock": 200,
+                "reserved": 0,
+                "lowStockThreshold": 30
             }
         },
-        "fallbackLink": "/checkout-fallback.html?product=HOLOGRAPHIC%20PACK%20(5%20STICKERS)"
+        "fallbackLink": "/checkout-fallback.html?product=HOLOGRAPHIC%20PACK%20(5%20STICKERS)",
+        "restockDate": null,
+        "lastUpdated": "2025-10-07T00:00:00.000Z"
     },
     {
         "id": "prod_sticker_003",
@@ -338,10 +485,15 @@
             "ONE_SIZE": {
                 "skuId": "sku_mini_sticker_set",
                 "priceId": "price_mini_sticker_set",
-                "soldOut": false
+                "soldOut": false,
+                "stock": 300,
+                "reserved": 0,
+                "lowStockThreshold": 40
             }
         },
-        "fallbackLink": "/checkout-fallback.html?product=MINI%20STICKER%20SET%20(10%20PACK)"
+        "fallbackLink": "/checkout-fallback.html?product=MINI%20STICKER%20SET%20(10%20PACK)",
+        "restockDate": null,
+        "lastUpdated": "2025-10-07T00:00:00.000Z"
     },
     {
         "id": "prod_hanging_001",
@@ -354,15 +506,23 @@
             "18x24": {
                 "skuId": "sku_canvas_dreams_18x24",
                 "priceId": "price_canvas_dreams_18x24",
-                "soldOut": false
+                "soldOut": false,
+                "stock": 25,
+                "reserved": 0,
+                "lowStockThreshold": 5
             },
             "24x36": {
                 "skuId": "sku_canvas_dreams_24x36",
                 "priceId": "price_canvas_dreams_24x36",
-                "soldOut": false
+                "soldOut": false,
+                "stock": 15,
+                "reserved": 0,
+                "lowStockThreshold": 5
             }
         },
-        "fallbackLink": "/checkout-fallback.html?product=CANVAS%20WALL%20ART%20-%20MONKEY%20DREAMS"
+        "fallbackLink": "/checkout-fallback.html?product=CANVAS%20WALL%20ART%20-%20MONKEY%20DREAMS",
+        "restockDate": null,
+        "lastUpdated": "2025-10-07T00:00:00.000Z"
     },
     {
         "id": "prod_hanging_002",
@@ -375,15 +535,23 @@
             "4x5ft": {
                 "skuId": "sku_tapestry_vibes_4x5",
                 "priceId": "price_tapestry_vibes_4x5",
-                "soldOut": false
+                "soldOut": false,
+                "stock": 30,
+                "reserved": 0,
+                "lowStockThreshold": 8
             },
             "5x7ft": {
                 "skuId": "sku_tapestry_vibes_5x7",
                 "priceId": "price_tapestry_vibes_5x7",
-                "soldOut": false
+                "soldOut": false,
+                "stock": 18,
+                "reserved": 0,
+                "lowStockThreshold": 5
             }
         },
-        "fallbackLink": "/checkout-fallback.html?product=TAPESTRY%20-%20FANCY%20VIBES"
+        "fallbackLink": "/checkout-fallback.html?product=TAPESTRY%20-%20FANCY%20VIBES",
+        "restockDate": null,
+        "lastUpdated": "2025-10-07T00:00:00.000Z"
     },
     {
         "id": "prod_hanging_003",
@@ -396,10 +564,15 @@
             "16x20": {
                 "skuId": "sku_metal_geometric_16x20",
                 "priceId": "price_metal_geometric_16x20",
-                "soldOut": false
+                "soldOut": false,
+                "stock": 12,
+                "reserved": 0,
+                "lowStockThreshold": 5
             }
         },
-        "fallbackLink": "/checkout-fallback.html?product=METAL%20POSTER%20-%20GEOMETRIC%20MONKEY"
+        "fallbackLink": "/checkout-fallback.html?product=METAL%20POSTER%20-%20GEOMETRIC%20MONKEY",
+        "restockDate": null,
+        "lastUpdated": "2025-10-07T00:00:00.000Z"
     },
     {
         "id": "prod_notebook_001",
@@ -412,10 +585,15 @@
             "A5": {
                 "skuId": "sku_journal_black_a5",
                 "priceId": "price_journal_black_a5",
-                "soldOut": false
+                "soldOut": false,
+                "stock": 75,
+                "reserved": 0,
+                "lowStockThreshold": 15
             }
         },
-        "fallbackLink": "/checkout-fallback.html?product=HARDCOVER%20JOURNAL%20-%20BLACK%20EDITION"
+        "fallbackLink": "/checkout-fallback.html?product=HARDCOVER%20JOURNAL%20-%20BLACK%20EDITION",
+        "restockDate": null,
+        "lastUpdated": "2025-10-07T00:00:00.000Z"
     },
     {
         "id": "prod_notebook_002",
@@ -428,10 +606,15 @@
             "A4": {
                 "skuId": "sku_sketchbook_artist_a4",
                 "priceId": "price_sketchbook_artist_a4",
-                "soldOut": false
+                "soldOut": false,
+                "stock": 60,
+                "reserved": 0,
+                "lowStockThreshold": 12
             }
         },
-        "fallbackLink": "/checkout-fallback.html?product=SPIRAL%20SKETCHBOOK%20-%20ARTIST%20SERIES"
+        "fallbackLink": "/checkout-fallback.html?product=SPIRAL%20SKETCHBOOK%20-%20ARTIST%20SERIES",
+        "restockDate": null,
+        "lastUpdated": "2025-10-07T00:00:00.000Z"
     },
     {
         "id": "prod_notebook_003",
@@ -444,9 +627,14 @@
             "POCKET": {
                 "skuId": "sku_pocket_notebook_set",
                 "priceId": "price_pocket_notebook_set",
-                "soldOut": false
+                "soldOut": false,
+                "stock": 90,
+                "reserved": 0,
+                "lowStockThreshold": 20
             }
         },
-        "fallbackLink": "/checkout-fallback.html?product=POCKET%20NOTEBOOK%20SET%20(3%20PACK)"
+        "fallbackLink": "/checkout-fallback.html?product=POCKET%20NOTEBOOK%20SET%20(3%20PACK)",
+        "restockDate": null,
+        "lastUpdated": "2025-10-07T00:00:00.000Z"
     }
 ]
