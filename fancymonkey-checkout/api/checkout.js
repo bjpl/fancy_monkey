@@ -33,12 +33,41 @@ module.exports = async (req, res) => {
     });
 
     try {
-        const { productId, skuId, priceId } = req.body;
+        // Support both single-item and multi-item checkout
+        const { productId, skuId, priceId, items } = req.body;
 
-        // Validate input
-        if (!productId || !skuId || !priceId) {
-            return res.status(400).json({ 
-                error: 'Missing required fields' 
+        let lineItems = [];
+        let metadata = {};
+
+        // Multi-item checkout (from cart)
+        if (items && Array.isArray(items) && items.length > 0) {
+            lineItems = items.map(item => ({
+                price: item.priceId,
+                quantity: item.quantity || 1
+            }));
+
+            // Store cart items in metadata (for webhook processing)
+            metadata = {
+                cartItems: JSON.stringify(items),
+                isMultiItem: 'true'
+            };
+        }
+        // Single-item checkout (legacy, direct from product)
+        else if (productId && skuId && priceId) {
+            lineItems = [{
+                price: priceId,
+                quantity: 1
+            }];
+
+            metadata = {
+                productId: productId,
+                skuId: skuId,
+                isMultiItem: 'false'
+            };
+        }
+        else {
+            return res.status(400).json({
+                error: 'Missing required fields: either provide (productId, skuId, priceId) or items array'
             });
         }
 
@@ -85,10 +114,7 @@ module.exports = async (req, res) => {
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card', 'apple_pay', 'google_pay'],
             mode: 'payment',
-            line_items: [{
-                price: priceId,
-                quantity: 1,
-            }],
+            line_items: lineItems, // Support multiple items
             success_url: `https://fancymonkey.shop/success.html?session_id={CHECKOUT_SESSION_ID}`,
             cancel_url: 'https://fancymonkey.shop',
             shipping_address_collection: {
@@ -136,18 +162,12 @@ module.exports = async (req, res) => {
                     },
                 },
             ],
-            metadata: {
-                productId: productId,
-                skuId: skuId,
-            },
+            metadata: metadata, // Use dynamic metadata
             allow_promotion_codes: true,
             billing_address_collection: 'required',
             customer_creation: 'always',
             payment_intent_data: {
-                metadata: {
-                    productId: productId,
-                    skuId: skuId,
-                },
+                metadata: metadata, // Use dynamic metadata
             },
             expires_at: Math.floor(Date.now() / 1000) + (30 * 60), // 30 minute expiration
         });

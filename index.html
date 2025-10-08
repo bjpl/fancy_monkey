@@ -1305,6 +1305,89 @@
             outline: 2px solid #667eea;
             outline-offset: 2px;
         }
+
+        /* ========== Inventory Display Styles ========== */
+
+        /* Stock Warning Badge */
+        .stock-warning {
+            background: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            margin-top: 8px;
+            display: inline-block;
+            animation: warning-pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes warning-pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        /* Low Stock Indicator */
+        .low-stock-indicator {
+            background: #fef3c7;
+            color: #92400e;
+            border: 1px solid #fbbf24;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .low-stock-indicator::before {
+            content: '⚠️';
+            font-size: 14px;
+        }
+
+        /* Sold Out Badge */
+        .sold-out-badge {
+            background: #ef4444;
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            margin-top: 8px;
+            display: inline-block;
+        }
+
+        /* Size Button Sold Out State Enhancement */
+        .size-btn.sold-out {
+            position: relative;
+            opacity: 0.4;
+        }
+
+        .size-btn.sold-out::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 10%;
+            right: 10%;
+            height: 2px;
+            background: #ef4444;
+            transform: translateY(-50%) rotate(-15deg);
+        }
+
+        /* Restock Date Display */
+        .restock-date {
+            color: #666;
+            font-size: 11px;
+            margin-top: 4px;
+            font-style: italic;
+        }
+
+        .restock-date::before {
+            content: '📅 ';
+        }
     </style>
 </head>
 <body>
@@ -2607,6 +2690,19 @@
         // Handle quantity increase
         function handleQuantityIncrease(cartItemId) {
             try {
+                const item = cart.getItems().find(i => i.id === cartItemId);
+                if (!item) return;
+
+                // Find product to check inventory
+                const product = products.find(p => p.id === item.productId);
+                if (product) {
+                    const inventoryCheck = canAddToCart(product, item.size, 1);
+                    if (!inventoryCheck.allowed) {
+                        showToast(inventoryCheck.reason, 'warning');
+                        return;
+                    }
+                }
+
                 cart.increaseQuantity(cartItemId);
                 renderCart();
             } catch (error) {
@@ -2717,6 +2813,84 @@
             });
         }
 
+        // ========== Inventory Display Functions ==========
+
+        // Display inventory status for a product
+        function displayInventoryStatus(product) {
+            const inventoryDiv = document.getElementById(`inventory-${product.id}`);
+            if (!inventoryDiv) return;
+
+            // Calculate total available stock across all sizes
+            let lowestAvailable = Infinity;
+            let hasLowStock = false;
+            let hasOutOfStock = false;
+            let allSoldOut = true;
+
+            Object.entries(product.sizes).forEach(([size, data]) => {
+                const available = (data.stock || 0) - (data.reserved || 0);
+                const threshold = data.lowStockThreshold || 5;
+
+                if (available > 0) {
+                    allSoldOut = false;
+                    if (available < lowestAvailable) {
+                        lowestAvailable = available;
+                    }
+                    if (available <= threshold) {
+                        hasLowStock = true;
+                    }
+                } else {
+                    hasOutOfStock = true;
+                }
+            });
+
+            // Show inventory warnings
+            if (allSoldOut) {
+                inventoryDiv.innerHTML = `
+                    <div class="sold-out-badge">SOLD OUT 😢</div>
+                    ${product.restockDate ? `<div class="restock-date">Restocking ${new Date(product.restockDate).toLocaleDateString()}</div>` : ''}
+                `;
+            } else if (hasLowStock && lowestAvailable < Infinity) {
+                inventoryDiv.innerHTML = `<div class="stock-warning">Only ${lowestAvailable} left! 🍌</div>`;
+            }
+        }
+
+        // Get available stock for a specific size
+        function getAvailableStock(product, size) {
+            const sizeData = product.sizes[size];
+            if (!sizeData) return 0;
+            return (sizeData.stock || 0) - (sizeData.reserved || 0);
+        }
+
+        // Check if item can be added to cart
+        function canAddToCart(product, size, requestedQuantity = 1) {
+            const available = getAvailableStock(product, size);
+
+            // Check if size is sold out
+            if (available <= 0) {
+                return {
+                    allowed: false,
+                    reason: `Size ${size} is sold out! 😢`
+                };
+            }
+
+            // Check if we already have this item in cart
+            const cartItem = cart.getItems().find(
+                item => item.productId === product.id && item.size === size
+            );
+
+            const currentCartQuantity = cartItem ? cartItem.quantity : 0;
+            const totalNeeded = currentCartQuantity + requestedQuantity;
+
+            if (totalNeeded > available) {
+                return {
+                    allowed: false,
+                    reason: `Only ${available} available (you have ${currentCartQuantity} in cart)`
+                };
+            }
+
+            return { allowed: true };
+        }
+
         // Render products
         function renderProducts() {
             const container = document.getElementById('products');
@@ -2746,18 +2920,22 @@
                                 </button>
                             `).join('')}
                         </div>
-                        <button 
-                            class="buy-btn" 
+                        <button
+                            class="buy-btn"
                             id="buy-${product.id}"
                             data-product="${product.id}"
                             disabled
                         >
                             SELECT SIZE
                         </button>
+                        <div id="inventory-${product.id}"></div>
                         <div id="error-${product.id}"></div>
                     </div>
                 `;
                 container.appendChild(productEl);
+
+                // Add inventory indicators
+                displayInventoryStatus(product);
             });
 
             // Add event listeners
@@ -2924,7 +3102,7 @@
             const selectedSize = selectedSizes[productId];
 
             if (!selectedSize) {
-                showToast('Please select a size first!', 'warning');
+                showToast('Please select a size first! 🙈', 'warning');
                 return;
             }
 
@@ -2936,11 +3114,18 @@
             }
 
             try {
+                // Check inventory before adding
+                const inventoryCheck = canAddToCart(product, selectedSize.size, 1);
+                if (!inventoryCheck.allowed) {
+                    showToast(inventoryCheck.reason, 'warning');
+                    return;
+                }
+
                 // Add item to cart
                 cart.addItem(product, selectedSize.size);
 
                 // Show success message
-                showToast(`Added ${product.name} (Size ${selectedSize.size}) to cart!`, 'success');
+                showToast(`Added ${product.name} (Size ${selectedSize.size}) to cart! 🛒`, 'success');
 
                 // Open cart sidebar
                 setTimeout(() => openCart(), 300);
