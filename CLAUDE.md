@@ -61,46 +61,109 @@ fancy_monkey/
 
 ## 🔄 MANDATORY FILE READING PROTOCOL
 
-**When you need detailed information, you MUST read the appropriate file:**
+**⚠️ CRITICAL: The summaries in this file are INCOMPLETE. When you encounter specific topics, you MUST read the detailed files.**
 
-### Read FANCY_MONKEY_PRACTICES.md when:
-- Implementing architecture decisions (vanilla JS, serverless, etc.)
-- Working with brand guidelines or UX requirements
-- Implementing error handling or fallback systems
-- Optimizing performance or implementing monitoring
-- Setting up security measures or input sanitization
-- Creating tests or deployment procedures
-- Making any architectural or design decisions
-- User asks about "how should I implement X"
-- User asks about "best practices for Y"
-- You need detailed implementation guidance
+---
 
-**Command to read:** Use the Read tool on `FANCY_MONKEY_PRACTICES.md`
+### 🎯 KEYWORD TRIGGERS → READ FANCY_MONKEY_PRACTICES.md
 
-### Read AGENT_DIRECTIVES.md when:
-- User asks about universal agent directives
-- Need to copy directives to another project
-- Reviewing complete directive documentation
-- User asks "what are the agent operating instructions"
+**If user mentions OR you need to work with ANY of these keywords, READ the detailed file FIRST:**
 
-**Command to read:** Use the Read tool on `AGENT_DIRECTIVES.md`
+**Architecture Keywords:**
+`vanilla JavaScript`, `framework choice`, `why no React`, `static site`, `JSON catalog`, `serverless`, `Vercel functions`, `file organization`, `project structure`
 
-### Read daily_reports/ when:
-- User asks about project history
-- Need to understand past decisions
-- Reviewing what was accomplished on specific dates
-- User asks "what did we do on [date]"
+**Brand/UX Keywords:**
+`monkey theme`, `banana`, `playful`, `tone of voice`, `error messages`, `fun messaging`, `brand guidelines`, `accessibility`, `WCAG`, `screen reader`
 
-**Command to read:** Use the Read tool on `daily_reports/YYYY-MM-DD.md`
+**Error Handling Keywords:**
+`fallback`, `error recovery`, `broken images`, `placeholder`, `checkout failure`, `Stripe error`, `network failure`, `resilience`, `graceful degradation`
 
-**⚠️ DO NOT GUESS** - If you need detailed information not in this file, READ the appropriate file first.
+**Performance Keywords:**
+`page load`, `bundle size`, `optimization`, `WebP`, `lazy load`, `First Contentful Paint`, `Core Web Vitals`, `Lighthouse`, `performance budget`
 
-**📢 PROTOCOL:** When reading detailed files, announce to the user:
+**Security Keywords:**
+`environment variables`, `API keys`, `Stripe keys`, `secrets`, `input sanitization`, `XSS`, `validation`, `security best practices`
+
+**Testing Keywords:**
+`test strategy`, `unit tests`, `E2E tests`, `test pyramid`, `manual testing`, `QA checklist`
+
+**Deployment Keywords:**
+`deploy`, `GitHub Pages`, `Vercel setup`, `DNS`, `CNAME`, `pre-deployment`, `rollback`, `production`
+
+**→ ACTION:** Use Read tool on `FANCY_MONKEY_PRACTICES.md` when you see these keywords.
+
+---
+
+### 📚 CONDENSED SUMMARIES (Read detailed file for implementation)
+
+#### Architecture (READ for: rationale, trade-offs, when to reconsider)
+- **Choice:** Vanilla HTML/CSS/JS (no frameworks)
+- **Why:** Fast load (<2s), zero build complexity, GitHub Pages deployment
+- **Data:** JSON product catalog (suitable for <1000 products)
+- **API:** Vercel serverless for Stripe integration
+- **📖 READ FANCY_MONKEY_PRACTICES.md → Architecture Implementation for complete rationale**
+
+#### Brand Guidelines (READ for: examples, tone rules, accessibility requirements)
+- **Theme:** Monkey/banana playful + professional
+- **Errors:** "banana break", "monkey business", "no monkey business here yet"
+- **Visual:** Banana cursor, warm colors, monkey mascots
+- **Accessibility:** All playful elements need accessible alternatives
+- **📖 READ FANCY_MONKEY_PRACTICES.md → Brand Guidelines for specific examples and rules**
+
+#### Error Handling (READ for: fallback chains, code examples, specific scenarios)
+- **Principle:** 4-level fallback (Primary → Alternative → Manual → Support)
+- **Images:** placeholder_product.svg fallback
+- **Checkout:** checkout-fallback.html for Stripe failures
+- **Network:** Retry logic + offline messaging
+- **📖 READ FANCY_MONKEY_PRACTICES.md → Error Handling Strategy for complete fallback chains**
+
+#### Performance (READ for: optimization strategies, monitoring setup)
+- **Targets:** <2s page load, <1s FCP, <100KB bundle
+- **Images:** WebP + fallbacks, lazy loading, 80% compression
+- **JS:** Minimize third-party, defer non-critical, code split
+- **📖 READ FANCY_MONKEY_PRACTICES.md → Performance Standards for optimization details**
+
+#### Security (READ for: implementation examples, validation patterns)
+- **Secrets:** ALL in environment variables (never commit)
+- **Stripe:** Server-side price validation, API keys in Vercel env
+- **Input:** Sanitize all user inputs (XSS prevention)
+- **📖 READ FANCY_MONKEY_PRACTICES.md → Security Practices for sanitization code**
+
+#### Testing (READ for: test pyramid, checklist, automated test setup)
+- **Manual:** Pre-deployment checklist (10+ items)
+- **Pyramid:** Unit → Integration → E2E (few E2E, many unit)
+- **Coverage:** Critical paths, checkout flow, error scenarios
+- **📖 READ FANCY_MONKEY_PRACTICES.md → Testing Strategy for complete checklist**
+
+#### Deployment (READ for: step-by-step procedures, rollback process)
+- **Frontend:** GitHub Pages (auto-deploy from main)
+- **Backend:** Vercel (env vars, serverless functions)
+- **Process:** Pre-flight checklist → Deploy → 24h monitoring
+- **📖 READ FANCY_MONKEY_PRACTICES.md → Deployment Procedures for detailed steps**
+
+---
+
+### 📋 OTHER FILES TO READ
+
+**AGENT_DIRECTIVES.md** - Read when:
+- User asks: "what are the agent directives", "show me the mandatory instructions"
+- Need to copy universal directives to another project
+- Reviewing complete 25-directive documentation
+
+**daily_reports/YYYY-MM-DD.md** - Read when:
+- User asks: "what happened on [date]", "show me progress from [date]"
+- Need project history, past decisions, or commit summaries
+- Understanding why certain choices were made
+
+---
+
+**⚠️ DO NOT GUESS OR ASSUME** - If keyword appears or topic comes up, READ the detailed file FIRST.
+
+**📢 TRANSPARENCY PROTOCOL:** When reading detailed files, announce:
 - "Reading FANCY_MONKEY_PRACTICES.md for detailed [topic] guidance..."
-- "Checking AGENT_DIRECTIVES.md for complete directive documentation..."
-- "Reading daily report for [date] to understand project history..."
+- "Checking daily report for [date] to understand project history..."
 
-This ensures transparency about information sources and confirms you're following the protocol.
+This confirms you're using authoritative sources, not assumptions.
 
 ---
 
@@ -279,59 +342,6 @@ This ensures transparency about information sources and confirms you're followin
 ════════════════════════════════════════════════════════
     END INSTRUCTIONS - COMPLIANCE REQUIRED
 ════════════════════════════════════════════════════════
-
----
-
-## 🎯 Project-Specific Implementation
-
-**⚠️ IMPORTANT: The summaries below are HIGH-LEVEL ONLY.**
-
-**📖 For detailed implementation guidance, you MUST read FANCY_MONKEY_PRACTICES.md using the Read tool.**
-
-**DO NOT implement features based on these summaries alone. Always read the detailed guide first.**
-
-### Brand Guidelines (MANDATORY-19: User Experience)
-- **Tone:** Playful, fun, professional
-- **Visual Theme:** Monkey/banana themed with warm colors
-- **Error Messages:** On-brand ("banana break", "monkey business")
-- **Accessibility:** All playful elements have accessible alternatives
-
-### Error Handling (MANDATORY-7: Error Handling)
-1. Never show broken state - Always have fallbacks
-2. On-brand messaging - Keep errors fun but informative
-3. Multiple fallback layers - Primary → Secondary → Manual
-4. User guidance - Always provide next steps
-
-**Example Fallback Chain:**
-- Primary: Stripe checkout → Error detected
-- Secondary: Redirect to fallback checkout page
-- Tertiary: Manual order form with email notification
-- Final: Contact support with order details
-
-### Performance Targets (MANDATORY-14: Performance Awareness)
-- Page load: < 2 seconds
-- First Contentful Paint: < 1 second
-- Bundle size: < 100KB compressed
-- Images: WebP + PNG/JPG fallbacks, lazy loading
-
-### Security (MANDATORY-9: Security & Privacy)
-- All secrets in environment variables (never commit)
-- Server-side price validation via Stripe
-- Input sanitization on all user inputs
-- Principle of least privilege
-
-### Architecture Decisions (MANDATORY-10: Architecture & Design)
-
-**Vanilla JavaScript chosen for:**
-- Fast load times (<2s target)
-- Zero build complexity
-- Direct GitHub Pages deployment
-- Full performance control
-
-**When to reconsider:**
-- Catalog exceeds 1000 products
-- Complex state management needed
-- Team prefers framework structure
 
 ---
 
