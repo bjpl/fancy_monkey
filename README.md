@@ -1,5 +1,15 @@
 # Fancy Monkey - People Clothes E-commerce Platform
 
+[![Version](https://img.shields.io/badge/version-0.1.0-blue.svg)](https://github.com/bjpl/fancy_monkey)
+[![Node](https://img.shields.io/badge/Node-18.x-green.svg)](https://nodejs.org/)
+[![Stripe](https://img.shields.io/badge/Stripe-14.5+-purple.svg)](https://stripe.com/)
+[![Vercel](https://img.shields.io/badge/Deployed-Vercel-black.svg)](https://vercel.com/)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
+**Status**: Active Production | **Version**: 0.1.0 | **Stack**: React 18, TypeScript 5.7, Vite 6.2, Supabase, Vitest
+
+A zero-cost e-commerce platform with GitHub Pages frontend and Vercel serverless checkout, featuring Stripe integration, mobile payments (Apple Pay/Google Pay), and real-time inventory validation.
+
 ## 🚀 Quick Start Launch Checklist
 
 ### Pre-Launch (24 hours before)
