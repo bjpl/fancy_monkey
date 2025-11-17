@@ -42,106 +42,107 @@ Fancy Monkey is an e-commerce platform designed for minimal infrastructure costs
 - Stripe payment processing
 - Domain verification for mobile payments
 
-## Installation
+## Project Demonstration
+
+This project showcases a zero-cost e-commerce architecture combining static frontend hosting with serverless checkout functionality. The implementation demonstrates cost-effective infrastructure patterns, payment integration, and mobile payment support while maintaining production-grade reliability.
+
+## Technical Overview
+
+**Key Technologies:**
+- React 18 with TypeScript 5.7
+- Vite 6.2 for build tooling
+- GitHub Pages for static frontend hosting
+- Vercel for serverless checkout functions
+- Stripe payment processing with mobile wallet support
+- Supabase for data management
+- Vitest for testing
+
+**Implementation Highlights:**
+- Zero-cost frontend architecture using GitHub Pages
+- Serverless backend with Vercel free tier
+- Stripe integration with Card, Apple Pay, and Google Pay support
+- Real-time inventory validation
+- Automatic SSL with custom domain support
+- Two-repository architecture for separation of concerns
+- Domain verification for mobile payment methods
+
+## Exploring the Code
+
+The project demonstrates split-architecture e-commerce:
+
+```
+fancy_monkey/
+├── images/                    # Product images
+├── .well-known/               # Apple Pay domain verification
+├── products.json              # Product catalog
+├── index.html                 # Main storefront
+├── maintenance.html           # Maintenance mode page
+└── fancymonkey-checkout/      # Vercel serverless function
+    ├── api/                   # Checkout API endpoints
+    └── package.json           # Dependencies
+```
+
+**For Technical Review:**
+
+Those interested in the implementation details can explore:
+- Static HTML/CSS/JS frontend architecture in root directory
+- Serverless checkout implementation in `/fancymonkey-checkout/api`
+- `products.json` for product catalog structure
+- `.well-known/` directory for Apple Pay domain verification
+- Stripe integration patterns and mobile wallet setup
+
+**Local Development** _(Optional for developers)_
+
+<details>
+<summary>Click to expand setup instructions</summary>
 
 ### Prerequisites
 - Node.js 18 or higher
-- GitHub account
-- Vercel account
-- Stripe account
+- GitHub account for frontend hosting
+- Vercel account for serverless functions
+- Stripe account for payment processing
 - Custom domain (optional)
 
 ### Frontend Setup
 
-Clone and configure the repository:
-
 ```bash
+# Clone repository
 git clone https://github.com/bjpl/fancy_monkey.git
 cd fancy_monkey
+
+# Update products.json with Stripe product IDs
+# Add product images to images/ directory
+
+# Enable GitHub Pages in repository settings
+# Configure source as main branch, root directory
 ```
-
-Update product catalog in `products.json` with Stripe product IDs. Add product images to `images/` directory.
-
-Commit and push changes:
-
-```bash
-git add .
-git commit -m "Initial setup"
-git push origin main
-```
-
-Enable GitHub Pages in repository settings. Configure source as main branch, root directory. Optionally configure custom domain.
 
 ### Backend Setup
 
-Navigate to checkout function directory:
-
 ```bash
+# Navigate to checkout function
 cd fancymonkey-checkout
 npm install
-```
 
-Configure environment variables:
-
-```bash
+# Configure environment variables
 cp .env.example .env
-```
+# Update .env with Stripe secret key
 
-Update `.env` with Stripe secret key:
-
-```env
-STRIPE_SECRET_KEY=sk_test_your_test_key
-```
-
-Test locally:
-
-```bash
+# Test locally
 npm run dev
-```
 
-Deploy to Vercel:
-
-```bash
+# Deploy to Vercel
 npm run deploy
 ```
 
-Set production environment variable in Vercel dashboard:
+### Payment Configuration
 
-```env
-STRIPE_SECRET_KEY=sk_live_your_live_key
-```
+1. Create products in Stripe Dashboard with prices and SKUs
+2. Enable payment methods (Card, Apple Pay, Google Pay)
+3. For custom domain: Add CNAME record pointing to bjpl.github.io
+4. Register domain in Stripe Dashboard for Apple Pay verification
 
-## Usage
-
-### Stripe Configuration
-
-Create products in Stripe Dashboard:
-
-1. Create product with name and description
-2. Add prices for each size variant
-3. Add SKU IDs to product metadata
-4. Enable payment methods (Card, Apple Pay, Google Pay)
-5. Configure webhooks for payment events (optional)
-
-### Domain Configuration
-
-For custom domain:
-
-1. Add CNAME record pointing to `bjpl.github.io`
-2. Wait for DNS propagation
-3. GitHub provisions SSL certificate automatically
-
-### Mobile Payment Setup
-
-Apple Pay:
-
-1. Domain verification file is included in `.well-known/` directory
-2. Register domain in Stripe Dashboard → Settings → Apple Pay
-
-Google Pay:
-
-1. Enable in Stripe Dashboard → Settings → Payment Methods
-2. No additional configuration required
+</details>
 
 ## Project Structure
 
