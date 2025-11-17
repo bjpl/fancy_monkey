@@ -10,6 +10,12 @@
 
 A zero-cost e-commerce platform with GitHub Pages frontend and Vercel serverless checkout, featuring Stripe integration, mobile payments (Apple Pay/Google Pay), and real-time inventory validation.
 
+## Live Demo
+
+Visit the live application: **[https://fancymonkey.shop](https://fancymonkey.shop)**
+
+Experience the full e-commerce platform in action with real-time inventory, mobile payments, and serverless checkout.
+
 ## 🚀 Quick Start Launch Checklist
 
 ### Pre-Launch (24 hours before)
