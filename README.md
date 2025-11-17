@@ -53,7 +53,7 @@ Two-repository setup for maximum reliability and zero hosting costs:
 
 ```bash
 # Clone this repository
-git clone https://github.com/yourusername/fancymonkey.git
+git clone https://github.com/bjpl/fancy_monkey.git
 cd fancymonkey
 
 # Update products.json with your Stripe IDs
@@ -107,7 +107,7 @@ npm run deploy
 
 ### 4. Domain Setup
 
-1. Add CNAME record pointing to `yourusername.github.io`
+1. Add CNAME record pointing to `bjpl.github.io`
 2. Wait for DNS propagation (up to 48 hours)
 3. GitHub will automatically provision SSL certificate
 
