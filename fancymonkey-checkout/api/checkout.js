@@ -5,25 +5,42 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
     apiVersion: '2023-10-16',
 });
 
-// CORS headers for allowing GitHub Pages domain
-const corsHeaders = {
-    'Access-Control-Allow-Origin': '*', // Will restrict to specific domain in production
-    'Access-Control-Allow-Methods': 'POST, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type',
-    'Access-Control-Max-Age': '86400',
-};
+// CORS headers - Whitelist specific domains
+const ALLOWED_ORIGINS = [
+    'https://fancymonkey.shop',
+    'https://www.fancymonkey.shop',
+    'https://bjpl.github.io',
+    ...(process.env.NODE_ENV === 'development' ? ['http://localhost:3000', 'http://localhost:5500', 'http://127.0.0.1:5500'] : [])
+];
+
+function getCorsHeaders(origin) {
+    return {
+        'Access-Control-Allow-Origin': ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0],
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Max-Age': '86400',
+    };
+}
 
 module.exports = async (req, res) => {
+    const origin = req.headers.origin;
+    const corsHeaders = getCorsHeaders(origin);
+
     // Handle preflight requests
     if (req.method === 'OPTIONS') {
-        return res.status(200).json({});
+        Object.keys(corsHeaders).forEach(key => {
+            res.setHeader(key, corsHeaders[key]);
+        });
+        return res.status(200).end();
     }
 
     // Only allow POST requests
     if (req.method !== 'POST') {
-        return res.status(405).json({ 
-            error: 'Method not allowed',
-            ...corsHeaders 
+        Object.keys(corsHeaders).forEach(key => {
+            res.setHeader(key, corsHeaders[key]);
+        });
+        return res.status(405).json({
+            error: 'Method not allowed'
         });
     }
 

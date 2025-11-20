@@ -5,8 +5,8 @@
         "name": "MIDNIGHT EMERALD HOODIE",
         "price": 58,
         "image": "images/black_hoodie_green_1.png",
-        "fit": "Premium oversized fit - Heavy weight cotton blend for all people",
-        "description": "Comfortable people clothes designed for everyday wear",
+        "fit": "Premium oversized fit - Heavy weight cotton blend",
+        "description": "Our signature heavyweight hoodie in deep emerald. 480gsm premium cotton with vintage wash finish that gets softer with every wear. The relaxed oversized fit and dropped shoulders create that effortlessly cool street style silhouette.",
         "sizes": {
             "S": {
                 "skuId": "sku_midnight_emerald_s",
@@ -60,7 +60,7 @@
         "price": 62,
         "image": "images/black_hoodie_green_2.png",
         "fit": "Limited Edition - Signature oversized silhouette",
-        "description": "Exclusive people clothes with unique design elements",
+        "description": "Limited drop featuring exclusive viper graphics. Heavy brushed fleece interior provides warmth without bulk. Ribbed cuffs and hem ensure the perfect fit season after season.",
         "sizes": {
             "S": {
                 "skuId": "sku_shadow_viper_s",
@@ -115,7 +115,7 @@
         "price": 55,
         "image": "images/white_hoodie_red_1.png",
         "fit": "Relaxed comfort fit - Soft brushed interior",
-        "description": "Cozy people clothes perfect for any season",
+        "description": "Clean arctic white meets bold flame red accents. Ultra-soft brushed interior keeps you warm while maintaining breathability. Perfect layering piece or statement standalone look.",
         "sizes": {
             "S": {
                 "skuId": "sku_arctic_flame_s",
@@ -169,7 +169,7 @@
         "price": 59,
         "image": "images/white_hoodie_red_2.png",
         "fit": "Classic drop shoulder - Premium cotton blend",
-        "description": "Stylish people clothes with attention to detail",
+        "description": "Elevated basics done right. Classic drop shoulder construction with subtle crimson details. Pre-shrunk premium cotton means this hoodie stays true to size wash after wash.",
         "sizes": {
             "S": {
                 "skuId": "sku_crimson_ghost_s",
@@ -223,7 +223,7 @@
         "price": 52,
         "image": "images/white_hoodie_red_3.png",
         "fit": "Comfort fit - Lightweight breathable fabric",
-        "description": "Versatile people clothes for active lifestyles",
+        "description": "Year-round essential in lightweight breathable fleece. Ruby-toned graphics pop against the clean white base. Ideal for active days when heavy hoodies are too much.",
         "sizes": {
             "S": {
                 "skuId": "sku_ruby_cloud_s",
@@ -277,7 +277,7 @@
         "price": 28,
         "image": "images/placeholder_product.svg",
         "fit": "Regular fit - 100% organic cotton",
-        "description": "Essential people clothes with signature branding",
+        "description": "Wardrobe staple crafted from 100% organic cotton. Classic crew neck with subtle signature branding. Soft hand feel that only gets better over time. Available in core sizes.",
         "sizes": {
             "S": {
                 "skuId": "sku_classic_monkey_tee_s",
@@ -331,7 +331,7 @@
         "price": 32,
         "image": "images/placeholder_product.svg",
         "fit": "Oversized fit - Premium heavyweight cotton",
-        "description": "Artistic people clothes with unique prints",
+        "description": "Bold gradient artwork on heavyweight premium cotton. Oversized silhouette perfect for layering. Limited quantities - each piece features unique color placement variations.",
         "sizes": {
             "S": {
                 "skuId": "sku_gradient_dreams_tee_s",
@@ -385,7 +385,7 @@
         "price": 25,
         "image": "images/placeholder_product.svg",
         "fit": "Slim fit - Soft cotton blend",
-        "description": "Clean, minimalist people clothes",
+        "description": "Minimalist aesthetic meets maximum comfort. Subtle logo placement keeps the focus on clean lines and perfect fit. Soft cotton blend drapes naturally for a refined look.",
         "sizes": {
             "S": {
                 "skuId": "sku_minimal_logo_tee_s",
