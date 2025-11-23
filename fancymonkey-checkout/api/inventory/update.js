@@ -1,16 +1,29 @@
 const fs = require('fs').promises;
 const path = require('path');
 
-// CORS headers
-const corsHeaders = {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'POST, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-    'Access-Control-Max-Age': '86400',
-};
+// CORS headers - Whitelist specific domains
+const ALLOWED_ORIGINS = [
+    'https://fancymonkey.shop',
+    'https://www.fancymonkey.shop',
+    'https://bjpl.github.io',
+    ...(process.env.NODE_ENV === 'development' ? ['http://localhost:3000', 'http://localhost:5500', 'http://127.0.0.1:5500'] : [])
+];
 
-// Simple admin authentication (in production, use proper auth)
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'fancymonkey2024';
+function getCorsHeaders(origin) {
+    return {
+        'Access-Control-Allow-Origin': ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0],
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        'Access-Control-Max-Age': '86400',
+    };
+}
+
+// Admin authentication - NO DEFAULT PASSWORD FOR SECURITY
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
+
+if (!ADMIN_PASSWORD) {
+    console.error('CRITICAL: ADMIN_PASSWORD environment variable is not set. Admin endpoints will not work.');
+}
 
 /**
  * UPDATE Inventory API
@@ -36,16 +49,24 @@ const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'fancymonkey2024';
  * }
  */
 module.exports = async (req, res) => {
+    const origin = req.headers.origin;
+    const corsHeaders = getCorsHeaders(origin);
+
     // Handle preflight
     if (req.method === 'OPTIONS') {
-        return res.status(200).setHeader('Access-Control-Allow-Origin', '*').end();
+        Object.keys(corsHeaders).forEach(key => {
+            res.setHeader(key, corsHeaders[key]);
+        });
+        return res.status(200).end();
     }
 
     // Only allow POST requests
     if (req.method !== 'POST') {
+        Object.keys(corsHeaders).forEach(key => {
+            res.setHeader(key, corsHeaders[key]);
+        });
         return res.status(405).json({
-            error: 'Method not allowed',
-            ...corsHeaders
+            error: 'Method not allowed'
         });
     }
 
