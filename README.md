@@ -1,243 +1,71 @@
-# Fancy Monkey - People Clothes E-commerce Platform
+# Fancy Monkey
+
+Zero-cost e-commerce platform with serverless architecture, demonstrating GitHub Pages static frontend and Vercel function integration with Stripe payments.
 
 [![Version](https://img.shields.io/badge/version-0.1.0-blue.svg)](https://github.com/bjpl/fancy_monkey)
 [![Node](https://img.shields.io/badge/Node-18.x-green.svg)](https://nodejs.org/)
 [![Stripe](https://img.shields.io/badge/Stripe-14.5+-purple.svg)](https://stripe.com/)
-[![Vercel](https://img.shields.io/badge/Deployed-Vercel-black.svg)](https://vercel.com/)
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-
-**Status**: Active Production | **Version**: 0.1.0 | **Stack**: React 18, TypeScript 5.7, Vite 6.2, Supabase, Vitest
-
-A zero-cost e-commerce platform with GitHub Pages frontend and Vercel serverless checkout, featuring Stripe integration, mobile payments (Apple Pay/Google Pay), and real-time inventory validation.
 
 ## Live Demo
 
-Visit the live application: **[https://fancymonkey.shop](https://fancymonkey.shop)**
+**[https://fancymonkey.shop](https://fancymonkey.shop)**
 
-Experience the full e-commerce platform in action with real-time inventory, mobile payments, and serverless checkout.
+## Tech Stack
 
-## 🚀 Quick Start Launch Checklist
+- **Frontend**: React 18, TypeScript 5.7, Vite 6.2
+- **Hosting**: GitHub Pages (static frontend)
+- **Backend**: Vercel serverless functions
+- **Database**: Supabase
+- **Payments**: Stripe Checkout API
+- **Testing**: Vitest
+- **Mobile Payments**: Apple Pay, Google Pay
 
-### Pre-Launch (24 hours before)
-- [ ] Verify Stripe products and SKUs are created
-- [ ] Test checkout with Stripe Test Mode
-- [ ] Upload product images to `/images/` folder
-- [ ] Update `products.json` with correct Stripe IDs
-- [ ] Verify domain DNS is pointing to GitHub Pages
-- [ ] Deploy Vercel function
-- [ ] Test mobile payment methods (Apple Pay/Google Pay)
-- [ ] Prepare social media posts
-- [ ] Triple-check inventory counts in Stripe
+## Technical Overview
 
-### Launch Day
-- [ ] Switch Stripe to Live Mode
-- [ ] Update Vercel env with live Stripe key
-- [ ] Do final test transaction
-- [ ] Post on social media
-- [ ] Monitor Stripe Dashboard
-- [ ] Check Vercel function logs
+This project demonstrates a cost-optimized e-commerce architecture using static site hosting with serverless checkout processing. The implementation separates frontend presentation from payment processing, utilizing free-tier cloud services while maintaining production-grade functionality.
 
-## 🏗️ Architecture Overview
+**Key Technical Features:**
+- Two-repository architecture (frontend + checkout API)
+- Real-time inventory validation via Stripe API
+- Serverless function for checkout session creation
+- Mobile payment integration (Apple Pay/Google Pay)
+- Custom domain with automatic SSL
+- Zero hosting costs within free tier limits
 
-Two-repository setup for maximum reliability and zero hosting costs:
+## Architecture
 
-1. **Frontend (GitHub Pages)**: `fancymonkey.shop`
-   - Static HTML/CSS/JavaScript
-   - Products loaded from `products.json`
-   - Zero hosting cost
-   - Automatic SSL
+**Frontend Repository (GitHub Pages):**
+- Static HTML/CSS/JavaScript
+- Product catalog loaded from JSON
+- Client-side cart management
+- Automatic SSL via GitHub
 
-2. **Checkout API (Vercel)**: `fancymonkey-checkout.vercel.app`
-   - Single serverless function
-   - Real-time inventory validation
-   - Stripe checkout session creation
-   - Free tier: 100k requests/month
+**Checkout API Repository (Vercel):**
+- Single serverless function
+- Real-time Stripe inventory validation
+- Checkout session creation
+- Free tier: 100k requests/month
 
-## 📦 Setup Instructions
+## Exploring the Code
 
-### 1. Frontend Setup (GitHub Pages)
+<details>
+<summary>Click to expand</summary>
 
-```bash
-# Clone this repository
-git clone https://github.com/yourusername/fancymonkey.git
-cd fancymonkey
+**Repository Structure:**
+- Frontend served from GitHub Pages
+- Separate Vercel project for checkout function
+- `products.json` - Product catalog with Stripe IDs
+- `images/` - Product images
+- `.well-known/` - Apple Pay domain verification
 
-# Update products.json with your Stripe IDs
-# Add product images to images/ folder
-# Commit and push
-git add .
-git commit -m "Initial setup"
-git push origin main
+**Technical Implementation:**
+The platform prevents overselling through Stripe API inventory checks before checkout session creation. The serverless function validates available quantity in real-time, while the static frontend provides fast page loads and zero hosting costs.
 
-# Enable GitHub Pages in repository settings
-# Source: main branch, / (root)
-# Custom domain: fancymonkey.shop
-```
+**For Technical Review:**
+The implementation showcases serverless architecture, third-party API integration (Stripe), and cost optimization strategies using free-tier cloud services.
 
-### 2. Vercel Function Setup
+</details>
 
-```bash
-cd fancymonkey-checkout
+## License
 
-# Install dependencies
-npm install
-
-# Create .env file from example
-cp .env.example .env
-# Add your Stripe secret key to .env
-
-# Test locally
-npm run dev
-
-# Deploy to Vercel
-npm run deploy
-
-# Set production environment variable in Vercel dashboard
-# STRIPE_SECRET_KEY = your_live_stripe_key
-```
-
-### 3. Stripe Configuration
-
-1. Create products in Stripe Dashboard
-2. For each product, create:
-   - Product with name and description
-   - Prices for each size variant
-   - Add SKU IDs to product metadata
-3. Enable payment methods:
-   - Card payments (default)
-   - Apple Pay (add domain verification)
-   - Google Pay (enable in settings)
-4. Configure webhooks (optional):
-   - payment_intent.succeeded
-   - checkout.session.completed
-
-### 4. Domain Setup
-
-1. Add CNAME record pointing to `yourusername.github.io`
-2. Wait for DNS propagation (up to 48 hours)
-3. GitHub will automatically provision SSL certificate
-
-## 📱 Mobile Payment Setup
-
-### Apple Pay
-1. Domain verification file already included in `.well-known/`
-2. Register domain in Stripe Dashboard → Settings → Apple Pay
-
-### Google Pay
-1. Enable in Stripe Dashboard → Settings → Payment Methods
-2. No additional configuration needed
-
-## 🔑 Environment Variables
-
-**Vercel Function (.env)**
-```
-STRIPE_SECRET_KEY=sk_test_... (test mode)
-STRIPE_SECRET_KEY=sk_live_... (production)
-```
-
-## 📝 Daily Operations
-
-### Morning (10 AM)
-1. Check Stripe Dashboard for overnight orders
-2. Update `products.json` if items sold out
-3. Check Vercel function logs for errors
-4. Respond to customer emails
-
-### Evening (6 PM)
-1. Final inventory reconciliation
-2. Export day's orders from Stripe
-3. Prepare shipping labels
-4. Update tracking numbers
-
-### Weekly
-1. Export customer email list
-2. Backup products.json
-3. Review Vercel usage (should be well under free tier)
-4. Plan next drop
-
-## 🚨 Emergency Procedures
-
-### Site Down
-1. Check GitHub Pages status
-2. Verify domain DNS
-3. Use Stripe Payment Links as backup
-
-### Function Timeout
-1. Check Vercel logs
-2. Customers will see fallback message
-3. Direct customers to backup Stripe links
-
-### Overselling Prevention
-- Stripe is source of truth for inventory
-- Function checks real-time before checkout
-- Visual sold-out states are just UI hints
-
-### Payment Issues
-1. Check Stripe Dashboard for declines
-2. Common issues:
-   - Insufficient funds
-   - Incorrect billing address
-   - International cards (if US-only)
-3. Customer service: help@fancymonkey.shop
-
-## 📊 Monitoring
-
-- **Stripe Dashboard**: Real-time payments and inventory
-- **Vercel Dashboard**: Function logs and usage
-- **GitHub Actions**: Deployment status
-- **UptimeRobot**: Free uptime monitoring (optional)
-
-## 🛠️ Maintenance Mode
-
-If you need to pause sales:
-1. Rename `index.html` to `index-live.html`
-2. Rename `maintenance.html` to `index.html`
-3. Push to GitHub
-4. Site will show maintenance message
-
-## 📞 Support Contacts
-
-- **Stripe Support**: dashboard.stripe.com/support
-- **Vercel Support**: vercel.com/support
-- **GitHub Support**: support.github.com
-- **Domain Registrar**: (your registrar's support)
-
-## 💰 Business Metrics
-
-Track these KPIs:
-- Conversion rate (visits → purchases)
-- Average order value
-- Sell-through rate by product
-- Customer acquisition cost
-- Return rate
-
-## 🔐 Security Notes
-
-- Never commit `.env` files
-- Use environment variables in Vercel
-- Enable 2FA on all accounts
-- Regularly rotate API keys
-- Keep backups of products.json
-
-## 📈 Scaling Path
-
-When you outgrow free tier:
-1. Vercel Pro: $20/month for more functions
-2. Custom backend: Node.js on Railway/Render
-3. Shopify: Full e-commerce platform
-4. Headless commerce: Commerce.js/Snipcart
-
-## 🎯 Launch Success Criteria
-
-- [ ] Test purchase completes successfully
-- [ ] Mobile payments work
-- [ ] Success page displays correctly
-- [ ] Email confirmation received
-- [ ] No console errors
-- [ ] Page loads under 3 seconds
-- [ ] Images optimized and loading
-- [ ] Fallback links tested
-
----
-
-**Remember**: Keep it simple. This system prevents overselling while staying free. Focus on selling great products, not complex tech.
+MIT License - See LICENSE file
